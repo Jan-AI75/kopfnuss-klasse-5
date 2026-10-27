@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2944c4">
+<title>Kopfnuss Klasse 5</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap">
+<style>
+/* Layout: eine Bildschirmseite auf Karopapier – Kopfleiste wie ein Heftetikett, darunter ein Arbeitsblatt in der Mitte */
+:root{
+  --paper:#f4f6fa; --sheet:#ffffff; --grid:#dde5f1; --ink:#1b2640; --muted:#5b6882; --line:#ccd5e4; --soft:#eef2fa;
+  --accent:#2944c4; --accent-ink:#ffffff; --accent-deep:#1a2f8f;
+  --ok:#1d8648; --bad:#d23838;
+  --de:#d84343; --ma:#2f6fdb; --ek:#2a9857; --ge:#c27726; --bi:#8150c8; --ph:#c29400;
+  --f-display:'Fredoka','Nunito',system-ui,sans-serif;
+  --f-body:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-hand:'Caveat','Segoe Print','Comic Sans MS',cursive;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#1b2624; --sheet:#22302d; --grid:#293834; --ink:#eef1e9; --muted:#a7b4ac; --line:#384a44; --soft:#2a3936;
+  --accent:#93b1ff; --accent-ink:#0e1a38; --accent-deep:#5d7fd6;
+  --ok:#6fd59a; --bad:#ff8a80;
+  --de:#ff7e7e; --ma:#7ca8ff; --ek:#62d290; --ge:#eaab60; --bi:#ba95f2; --ph:#f0cd4c;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --paper:#1b2624; --sheet:#22302d; --grid:#293834; --ink:#eef1e9; --muted:#a7b4ac; --line:#384a44; --soft:#2a3936;
+  --accent:#93b1ff; --accent-ink:#0e1a38; --accent-deep:#5d7fd6;
+  --ok:#6fd59a; --bad:#ff8a80;
+  --de:#ff7e7e; --ma:#7ca8ff; --ek:#62d290; --ge:#eaab60; --bi:#ba95f2; --ph:#f0cd4c;
+  color-scheme:dark;
+}
+html,body{height:100%}
+body{
+  background-color:var(--paper); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.5;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:22px 22px; -webkit-tap-highlight-color:transparent;
+}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.app{display:flex;flex-direction:column;height:100%;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Kopfleiste */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:12px;max-width:760px;width:100%;margin-inline:auto}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.5rem;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.brand small{font-family:var(--f-body);font-weight:800;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;background:var(--ink);color:var(--paper);border-radius:6px;padding:2px 7px}
+.right{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.seg{display:flex;background:var(--sheet);border:1.5px solid var(--line);border-radius:12px;padding:3px;gap:3px}
+.seg button{border:0;background:transparent;border-radius:9px;padding:7px 12px;font-weight:700;font-size:.92rem;color:var(--muted);min-height:38px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg.locked{opacity:.55}
+.seg.locked button{cursor:not-allowed}
+.total{font-family:var(--f-display);font-weight:600;background:var(--sheet);border:1.5px solid var(--line);border-radius:12px;padding:6px 12px;font-variant-numeric:tabular-nums;min-height:44px;display:flex;align-items:center;gap:6px}
+.total b{color:var(--ph)}
+
+main{flex:1;overflow-y:auto;padding-block:4px 20px}
+.wrap{max-width:760px;margin-inline:auto;display:flex;flex-direction:column;gap:14px}
+.sheet{background:var(--sheet);border:1.5px solid var(--line);border-radius:18px;padding:22px clamp(18px,4vw,32px);box-shadow:0 2px 0 var(--line)}
+.eyebrow{font-weight:800;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+h1,h2{font-family:var(--f-display);font-weight:700;line-height:1.15;margin:0;text-wrap:balance}
+h1{font-size:clamp(1.8rem,5vw,2.5rem)}
+h2{font-size:1.5rem}
+p{margin:0}
+.lead{color:var(--muted);font-size:1.08rem;max-width:56ch}
+.btn{border:0;border-radius:14px;background:var(--accent);color:var(--accent-ink);font-family:var(--f-display);font-weight:600;font-size:1.2rem;min-height:58px;padding:0 26px;box-shadow:0 4px 0 var(--accent-deep);transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--accent-deep)}
+.btn.ghost{background:var(--soft);color:var(--ink);box-shadow:0 4px 0 var(--line)}
+.btn.ghost:active{box-shadow:0 1px 0 var(--line)}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+
+/* Start */
+.start{display:flex;flex-direction:column;gap:16px}
+.covers{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.cover{border-radius:8px 10px 10px 8px;background:var(--sc);color:#fff;padding:10px 6px 8px;font-weight:800;font-size:.78rem;text-align:center;position:relative;min-height:62px;display:flex;align-items:flex-end;justify-content:center;box-shadow:inset 6px 0 0 rgba(0,0,0,.12)}
+.cover::before{content:"";position:absolute;top:9px;left:12px;right:8px;height:16px;border-radius:3px;background:rgba(255,255,255,.85)}
+:root[data-theme="dark"] .cover{color:#13201d}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cover{color:#13201d}}
+.pickwrap{display:flex;flex-direction:column;gap:10px}
+.picks{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+.pick{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:var(--sheet);border:2px solid var(--line);border-radius:14px;padding:12px;min-height:104px;box-shadow:0 3px 0 var(--line)}
+.pick .ico{width:40px;height:40px;border-radius:10px;background:var(--soft);display:grid;place-items:center}
+.pick b{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.2}
+.pick small{color:var(--muted);font-size:.82rem;font-weight:700}
+.pick[aria-checked="true"]{border-color:var(--accent);background:var(--soft);box-shadow:0 3px 0 var(--accent)}
+.pick[aria-checked="true"] .ico{background:var(--sheet)}
+.reward{display:flex;align-items:center;gap:14px;background:var(--soft);border-radius:14px;padding:14px 16px}
+.reward .ico{width:48px;height:48px;border-radius:12px;background:var(--sheet);border:1.5px solid var(--line);display:grid;place-items:center;flex:none}
+.reward strong{font-family:var(--f-display);font-size:1.2rem;font-weight:600;display:block}
+.reward span{color:var(--muted);font-size:.92rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{background:var(--sheet);border:1.5px solid var(--line);border-radius:14px;padding:12px 14px}
+.stat b{font-family:var(--f-display);font-size:1.6rem;font-weight:600;display:block;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat span{color:var(--muted);font-size:.82rem;font-weight:700}
+
+/* Quiz */
+.qtop{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.tag{display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:.9rem;color:var(--sc)}
+.tag::before{content:"";width:14px;height:18px;border-radius:2px 4px 4px 2px;background:var(--sc)}
+.pts{font-family:var(--f-display);font-weight:600;font-variant-numeric:tabular-nums}
+.marks{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+.mark{aspect-ratio:1;max-width:100%;border:1.5px solid var(--line);background:var(--sheet);border-radius:5px;display:grid;place-items:center;font-family:var(--f-hand);font-weight:700;font-size:1.5rem;line-height:1}
+.mark.cur{border-color:var(--accent);border-width:2.5px}
+.mark.ok{color:var(--ok)} .mark.bad{color:var(--bad)}
+.qtext{font-family:var(--f-display);font-weight:600;font-size:clamp(1.35rem,3.6vw,1.75rem);line-height:1.3;margin:6px 0 4px;text-wrap:balance}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.answers{grid-template-columns:1fr}}
+.ans{display:flex;align-items:center;gap:12px;text-align:left;background:var(--sheet);border:2px solid var(--line);border-radius:14px;padding:14px 16px;min-height:66px;font-size:1.12rem;font-weight:700;box-shadow:0 3px 0 var(--line);transition:transform .08s}
+.ans:active{transform:translateY(2px)}
+.ans .k{flex:none;width:30px;height:30px;border-radius:8px;background:var(--soft);display:grid;place-items:center;font-family:var(--f-display);font-size:.95rem;color:var(--muted)}
+.ans[disabled]{cursor:default}
+.ans.ok{border-color:var(--ok);box-shadow:0 3px 0 var(--ok)}
+.ans.ok .k{background:var(--ok);color:var(--sheet)}
+.ans.bad{border-color:var(--bad);box-shadow:0 3px 0 var(--bad)}
+.ans.bad .k{background:var(--bad);color:var(--sheet)}
+.ans.dim{opacity:.5}
+.fb{display:flex;flex-direction:column;gap:10px;border-top:2px dashed var(--line);padding-top:14px}
+.remark{font-family:var(--f-hand);font-weight:700;font-size:2.1rem;line-height:1}
+.remark.ok{color:var(--ok)} .remark.bad{color:var(--bad)}
+.expl{font-size:1.05rem}
+.expl b{font-weight:800}
+.bonus{display:inline-block;font-weight:800;font-size:.85rem;color:var(--ph);margin-left:8px}
+
+/* Ergebnis */
+.score{font-family:var(--f-display);font-weight:700;font-size:clamp(3.4rem,12vw,5rem);line-height:1;font-variant-numeric:tabular-nums}
+.score small{font-size:1.1rem;color:var(--muted);font-weight:600;margin-left:6px}
+.meter{height:14px;background:var(--soft);border-radius:8px;position:relative;overflow:hidden}
+.meter i{position:absolute;inset:0 auto 0 0;background:var(--ok);border-radius:8px}
+.meter-l{display:flex;justify-content:space-between;font-size:.82rem;color:var(--muted);font-weight:700}
+
+/* Spiel */
+.ghead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.gscore{font-family:var(--f-display);font-weight:700;font-size:2rem;line-height:1;font-variant-numeric:tabular-nums;text-align:right}
+.gscore small{display:block;font-family:var(--f-body);font-size:.75rem;color:var(--muted);font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.timer{height:10px;background:var(--soft);border-radius:6px;overflow:hidden}
+.timer i{display:block;height:100%;background:var(--accent);border-radius:6px;width:100%}
+.cwrap{position:relative;display:flex;justify-content:center}
+canvas{display:block;border-radius:14px;border:1.5px solid var(--line);touch-action:none;max-width:100%}
+.over{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:16px}
+.over .sheet{text-align:center;display:flex;flex-direction:column;gap:12px;align-items:center;max-width:340px}
+ .hint{color:var(--muted);text-align:center;font-size:.95rem}
+.linkbtn{background:none;border:0;color:var(--muted);font-weight:700;text-decoration:underline;padding:6px;align-self:center}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html,body{margin:0}body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<div class="app">
+  <header class="bar">
+    <div class="brand">Kopfnuss <small>Klasse 5</small></div>
+    <div class="right">
+      <div class="seg" id="seg" role="group" aria-label="Schulart">
+        <button id="lv0" type="button" aria-pressed="false">Realschule</button>
+        <button id="lv1" type="button" aria-pressed="false">Gymnasium</button>
+      </div>
+      <div class="total" title="Punkte insgesamt"><b>★</b><span id="total">0</span></div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Start -->
+    <section class="wrap" id="s-start">
+      <div class="sheet start">
+        <div class="eyebrow" id="roundNo">Runde 1</div>
+        <h1>Zehn Fragen, dann ein Spiel.</h1>
+        <p class="lead">Deutsch, Mathe und Allgemeinwissen bunt gemischt. Mit 60 Punkten schaltest du die Belohnung frei.</p>
+        <div class="covers" aria-hidden="true">
+          <div class="cover" style="--sc:var(--de)">Deutsch</div>
+          <div class="cover" style="--sc:var(--ma)">Mathe</div>
+          <div class="cover" style="--sc:var(--ek)">Erdkunde</div>
+          <div class="cover" style="--sc:var(--ge)">Geschichte</div>
+          <div class="cover" style="--sc:var(--bi)">Bio</div>
+          <div class="cover" style="--sc:var(--ph)">Physik</div>
+        </div>
+        <div class="pickwrap">
+          <div class="eyebrow">Welches Spiel willst du danach spielen?</div>
+          <div class="picks" id="picks" role="radiogroup" aria-label="Belohnungsspiel"></div>
+        </div>
+        <div class="row"><button class="btn" id="go" type="button">Runde starten</button></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b id="stRounds">0</b><span>Runden</span></div>
+        <div class="stat"><b id="stRight">0</b><span>richtige Antworten</span></div>
+        <div class="stat"><b id="stGames">0</b><span>Spiele verdient</span></div>
+      </div>
+    </section>
+
+    <!-- Quiz -->
+    <section class="wrap" id="s-quiz" hidden>
+      <div class="sheet" style="display:flex;flex-direction:column;gap:14px">
+        <div class="qtop">
+          <span class="tag" id="qTag">Mathe</span>
+          <span class="pts"><span id="qNo">Frage 1 von 10</span> · <span id="qPts">0</span> Punkte</span>
+        </div>
+        <div class="marks" id="marks"></div>
+        <p class="qtext" id="qText"></p>
+        <div class="answers" id="answers"></div>
+        <div class="fb" id="fb" hidden>
+          <div><span class="remark" id="remark"></span><span class="bonus" id="bonus"></span></div>
+          <p class="expl" id="expl"></p>
+          <div class="row"><button class="btn" id="next" type="button">Weiter</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ergebnis -->
+    <section class="wrap" id="s-result" hidden>
+      <div class="sheet" style="display:flex;flex-direction:column;gap:16px">
+        <div class="eyebrow">Ergebnis</div>
+        <div class="score"><span id="rScore">0</span><small>Punkte</small></div>
+        <p class="remark" id="rRemark" style="font-size:2.2rem"></p>
+        <p class="lead" id="rRight"></p>
+        <div>
+          <div class="meter"><i id="rMeter"></i></div>
+          <div class="meter-l"><span>0</span><span>Ziel: 60 Punkte</span></div>
+        </div>
+        <p class="expl" id="rMsg"></p>
+        <div class="row" id="rBtns"></div>
+      </div>
+    </section>
+
+    <!-- Spiel -->
+    <section class="wrap" id="s-game" hidden>
+      <div class="ghead">
+        <div><div class="eyebrow">Belohnung</div><h2 id="gName">Katapult</h2></div>
+        <div class="gscore"><span id="gScore">0</span><small>Punkte</small></div>
+      </div>
+      <div class="timer"><i id="tBar"></i></div>
+      <div class="cwrap" id="cwrap">
+        <canvas id="cv"></canvas>
+        <div class="over" id="over" hidden>
+          <div class="sheet">
+            <div class="remark ok">Zeit um!</div>
+            <p class="expl" id="overTxt"></p>
+            <button class="btn" id="back" type="button">Weiter lernen</button>
+          </div>
+        </div>
+      </div>
+            <p class="hint" id="gHint"></p>
+      <button class="linkbtn" id="quit" type="button">Spiel beenden</button>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+'use strict';
+const $=s=>document.querySelector(s);
+const ri=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+const fmt=n=>(n<0?'−':'')+Math.abs(n).toLocaleString('de-DE');
+
+/* ---------- Speicher (nur in diesem Browser) ---------- */
+const KEY='kopfnuss5';
+let S={level:0,total:0,rounds:0,right:0,games:0,next:0,used:[]};
+try{Object.assign(S,JSON.parse(localStorage.getItem(KEY)||'{}'));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+/* ---------- Fächer ---------- */
+const SUB={de:['Deutsch','--de'],ma:['Mathe','--ma'],ek:['Erdkunde','--ek'],ge:['Geschichte','--ge'],bi:['Biologie','--bi'],ph:['Physik','--ph']};
+
+/* ---------- Fragenkatalog: l=0 für alle, l=1 nur Gymnasium ---------- */
+const Q=[];
+function q(s,l,t,a,w,x){Q.push({id:Q.length,s,l,t,a,w,x});}
+
+// Deutsch
+q('de',0,'Welche Wortart ist „schnell“ im Satz „Der Hund rennt schnell.“?','Adjektiv',['Verb','Nomen','Artikel'],'Adjektive beschreiben, <b>wie</b> etwas ist oder geschieht.');
+q('de',0,'Welches Wort ist richtig geschrieben?','Fahrrad',['Farrad','Fahrad','Fahrradd'],'„Fahr“ von fahren und „Rad“: <b>Fahrrad</b> mit h und doppeltem r.');
+q('de',0,'Ergänze: „Ich hoffe, ___ du morgen kommst.“','dass',['das','was','wie'],'Kann man „dieses“ oder „welches“ einsetzen, schreibt man „das“. Hier geht das nicht, also <b>dass</b>.');
+q('de',0,'Was ist die Mehrzahl von „das Museum“?','die Museen',['die Museums','die Musea','die Museumme'],'Wörter auf -um bilden die Mehrzahl oft mit -en: <b>Museen</b>, Zentren, Alben.');
+q('de',0,'In welcher Zeitform steht: „Wir sind nach Hause gegangen.“?','Perfekt',['Präteritum','Präsens','Futur'],'Perfekt = Hilfsverb (sein/haben) + Partizip: <b>sind gegangen</b>.');
+q('de',0,'Wie heißt das Präteritum von „gehen“ (ich …)?','ich ging',['ich gehte','ich gang','ich bin gegangen'],'„gehen“ ist ein starkes Verb: gehen – <b>ging</b> – gegangen.');
+q('de',0,'Was ist das Subjekt im Satz „Am Morgen bellt der Hund laut.“?','der Hund',['am Morgen','bellt','laut'],'Frage: <b>Wer oder was</b> bellt? Der Hund.');
+q('de',0,'Was ist das Prädikat im Satz „Lena liest ein spannendes Buch.“?','liest',['Lena','ein spannendes Buch','spannendes'],'Das Prädikat ist das Verb im Satz. Frage: Was tut Lena? Sie <b>liest</b>.');
+q('de',0,'In welchem Fall steht „dem Mann“ in „Ich helfe dem Mann.“?','Dativ',['Nominativ','Genitiv','Akkusativ'],'Frage: <b>Wem</b> helfe ich? Wem-Fall = Dativ.');
+q('de',0,'Welcher Satz ist richtig geschrieben?','Beim Laufen bekomme ich Durst.',['Beim laufen bekomme ich Durst.','beim Laufen bekomme ich durst.','Beim Laufen bekomme ich durst.'],'Nach „beim“ wird ein Verb zum Nomen und groß geschrieben: <b>das Laufen</b>.');
+q('de',0,'Was ist das Gegenteil von „mutig“?','feige',['tapfer','stark','laut'],'Gegenteile nennt man Antonyme: mutig ↔ <b>feige</b>.');
+q('de',0,'Welcher Satz braucht am Ende ein Fragezeichen?','Kommst du morgen mit',['Komm sofort her','Ich komme morgen mit','Was für ein schöner Tag'],'Beim Fragesatz steht das Verb vorn: <b>Kommst</b> du …?');
+q('de',0,'Welches Wort ist ein zusammengesetztes Nomen?','Haustür',['laufen','wunderschön','darunter'],'<b>Haus + Tür</b> ergibt ein neues Nomen.');
+q('de',0,'Welche Zeichen setzt man bei wörtlicher Rede?','Anführungszeichen',['Klammern','Bindestriche','Schrägstriche'],'Was jemand sagt, steht in <b>„Anführungszeichen“</b>.');
+q('de',0,'Wie trennt man „Fenster“ richtig?','Fens-ter',['Fe-nster','Fenst-er','F-enster'],'„st“ darf getrennt werden: <b>Fens-ter</b>, wie Kis-te.');
+q('de',0,'Welches Wort gehört NICHT zur Wortfamilie „fahren“?','Farbe',['Fahrer','Fahrt','Gefahr'],'Farbe hat einen anderen Wortstamm. Fahrer, Fahrt und Gefahr kommen von <b>fahr</b>.');
+q('de',0,'Welches Wort ist ein Personalpronomen?','wir',['unser','dieser','schnell'],'Personalpronomen: ich, du, er, sie, es, <b>wir</b>, ihr, sie.');
+q('de',1,'Was ist der Superlativ von „gut“?','am besten',['am gutesten','besser','am bessersten'],'gut – besser – <b>am besten</b>. Das Wort ändert sich ganz.');
+q('de',1,'Was ist das Akkusativobjekt in „Er gibt dem Kind den Ball.“?','den Ball',['dem Kind','Er','gibt'],'Frage: <b>Wen oder was</b> gibt er? Den Ball.');
+q('de',1,'Welche Wortart ist „unter“ in „Die Katze liegt unter dem Tisch.“?','Präposition',['Konjunktion','Adjektiv','Pronomen'],'Präpositionen zeigen, wie Dinge zueinander liegen: <b>unter</b>, auf, neben.');
+q('de',1,'Welcher Satz ist ein Satzgefüge?','Ich bleibe zu Hause, weil es regnet.',['Es regnet.','Ich bleibe zu Hause und lese.','Regen! Schon wieder!'],'Ein Satzgefüge hat einen Hauptsatz und einen <b>Nebensatz</b> (hier mit „weil“).');
+
+// Mathe (feste Fragen; die Rechenaufgaben werden zusätzlich erzeugt)
+q('ma',0,'Wie viele Meter sind 1 Kilometer?','1.000 m',['100 m','10.000 m','10 m'],'Kilo heißt tausend: 1 km = <b>1.000 m</b>.');
+q('ma',0,'Wie viele Minuten sind 3 Stunden?','180',['300','120','160'],'1 Stunde = 60 Minuten, also 3 · 60 = <b>180</b>.');
+q('ma',0,'Wie viele Gramm sind 2 Kilogramm?','2.000 g',['200 g','20 g','20.000 g'],'1 kg = 1.000 g, also 2 kg = <b>2.000 g</b>.');
+q('ma',0,'Wie viele Ecken hat ein Würfel?','8',['6','12','4'],'Oben 4 und unten 4: zusammen <b>8 Ecken</b>.');
+q('ma',0,'Ein Rechteck ist 5 cm lang und 3 cm breit. Wie groß ist sein Umfang?','16 cm',['15 cm','8 cm','30 cm'],'Umfang = 5 + 3 + 5 + 3 = <b>16 cm</b>.');
+q('ma',0,'Runde 4.567 auf Hunderter.','4.600',['4.500','5.000','4.570'],'Die Zehnerziffer ist 6, also aufrunden: <b>4.600</b>.');
+q('ma',0,'Wie viele Nullen hat eine Million?','6',['5','7','9'],'1.000.000 hat <b>6 Nullen</b>.');
+q('ma',0,'Wie viele Cent sind 4,50 €?','450 ct',['45 ct','4.500 ct','405 ct'],'1 € = 100 ct, also 4,50 € = <b>450 ct</b>.');
+q('ma',1,'Welche Zahl ist eine Primzahl?','13',['9','15','21'],'13 ist nur durch 1 und sich selbst teilbar. 9 = 3·3, 15 = 3·5, 21 = 3·7.');
+q('ma',1,'Wie viele Kanten hat ein Würfel?','12',['8','6','10'],'Oben 4, unten 4 und 4 senkrechte: <b>12 Kanten</b>.');
+q('ma',1,'Welche Zahl ist am kleinsten?','−8',['−3','0','2'],'Je weiter links auf dem Zahlenstrahl, desto kleiner: <b>−8</b>.');
+q('ma',1,'Was ist 10³?','1.000',['30','100','10.000'],'10³ = 10 · 10 · 10 = <b>1.000</b>.');
+
+// Erdkunde
+q('ek',0,'Wie heißt der höchste Berg Deutschlands?','Zugspitze',['Watzmann','Feldberg','Brocken'],'Die <b>Zugspitze</b> ist 2.962 m hoch und liegt in Bayern.');
+q('ek',0,'Welcher ist der größte Kontinent?','Asien',['Afrika','Europa','Nordamerika'],'<b>Asien</b> ist am größten, dort leben auch die meisten Menschen.');
+q('ek',0,'Welcher ist der größte Ozean?','Pazifik',['Atlantik','Indischer Ozean','Nordpolarmeer'],'Der <b>Pazifik</b> ist größer als alle Kontinente zusammen.');
+q('ek',0,'Wie heißt die Hauptstadt von Bayern?','München',['Nürnberg','Augsburg','Regensburg'],'<b>München</b> ist Landeshauptstadt von Bayern.');
+q('ek',0,'An welche drei Länder grenzt der Bodensee?','Deutschland, Österreich, Schweiz',['Deutschland, Frankreich, Schweiz','Österreich, Italien, Schweiz','Deutschland, Österreich, Tschechien'],'Am Bodensee treffen sich <b>Deutschland, Österreich und die Schweiz</b>.');
+q('ek',0,'Welcher Fluss fließt durch Regensburg, Passau und Wien?','Donau',['Rhein','Main','Elbe'],'Die <b>Donau</b> fließt von West nach Ost bis ins Schwarze Meer.');
+q('ek',0,'In welches Meer mündet der Rhein?','Nordsee',['Ostsee','Mittelmeer','Schwarzes Meer'],'Der Rhein mündet in den Niederlanden in die <b>Nordsee</b>.');
+q('ek',0,'Welche Linie teilt die Erde in Nord- und Südhalbkugel?','Äquator',['Nullmeridian','Polarkreis','Wendekreis'],'Der <b>Äquator</b> ist der längste Breitenkreis.');
+q('ek',0,'Wie viele Bundesländer hat Deutschland?','16',['12','14','18'],'Deutschland hat <b>16</b> Bundesländer.');
+q('ek',0,'In welcher Himmelsrichtung geht die Sonne auf?','Osten',['Westen','Norden','Süden'],'Im <b>Osten</b> geht die Sonne auf, im Westen unter.');
+q('ek',0,'Wie heißt die Hauptstadt von Italien?','Rom',['Mailand','Venedig','Neapel'],'<b>Rom</b> ist die Hauptstadt Italiens.');
+q('ek',0,'Welche große Wüste liegt im Norden Afrikas?','Sahara',['Gobi','Atacama','Kalahari'],'Die <b>Sahara</b> ist die größte heiße Wüste der Erde.');
+q('ek',0,'Wie viele Kontinente gibt es?','7',['5','6','9'],'Man zählt meist <b>7</b>: Asien, Afrika, Nordamerika, Südamerika, Antarktika, Europa, Australien.');
+q('ek',0,'Welches Gebirge liegt in Bayern?','Bayerischer Wald',['Harz','Schwarzwald','Eifel'],'Der <b>Bayerische Wald</b> liegt an der Grenze zu Tschechien.');
+q('ek',1,'Auf einer Karte mit Maßstab 1 : 100.000 – wie weit ist 1 cm in echt?','1 km',['100 m','10 km','100 km'],'100.000 cm = 1.000 m = <b>1 km</b>.');
+q('ek',1,'Durch welche Stadt verläuft der Nullmeridian?','London (Greenwich)',['Paris','Berlin','Rom'],'Der Nullmeridian läuft durch die Sternwarte in <b>Greenwich</b> bei London.');
+q('ek',1,'Was zeigen Höhenlinien auf einer Karte?','Punkte gleicher Höhe',['Straßen','Landesgrenzen','Flüsse'],'Höhenlinien verbinden <b>Orte gleicher Höhe</b> über dem Meeresspiegel.');
+
+// Geschichte
+q('ge',0,'Wer baute die Pyramiden von Gizeh?','die alten Ägypter',['die Römer','die Griechen','die Wikinger'],'Die Pyramiden waren Grabmäler ägyptischer Herrscher, über 4.500 Jahre alt.');
+q('ge',0,'Wie nannte man den Herrscher im alten Ägypten?','Pharao',['Kaiser','Sultan','Zar'],'Der <b>Pharao</b> galt als Sohn des Sonnengottes.');
+q('ge',0,'Welche Zahl ist die römische Zahl X?','10',['5','50','100'],'I = 1, V = 5, <b>X = 10</b>, L = 50, C = 100.');
+q('ge',0,'In welchem Jahr fiel die Berliner Mauer?','1989',['1945','1961','1990'],'Am 9. November <b>1989</b> wurde die Mauer geöffnet.');
+q('ge',0,'An welchem Tag feiern wir den Tag der Deutschen Einheit?','3. Oktober',['1. Mai','9. November','24. Dezember'],'Seit dem <b>3. Oktober 1990</b> ist Deutschland wiedervereinigt.');
+q('ge',0,'Was änderte sich in der Jungsteinzeit?','Menschen wurden sesshaft und betrieben Ackerbau',['Menschen bauten Burgen','Der Buchdruck wurde erfunden','Es gab die ersten Autos'],'Statt nur zu jagen und zu sammeln, bauten die Menschen <b>Häuser und Felder</b>.');
+q('ge',0,'Wo wurde die Gletschermumie „Ötzi“ gefunden?','in den Alpen',['in Ägypten','an der Nordsee','in der Sahara'],'Ötzi lag über 5.000 Jahre im Eis der <b>Ötztaler Alpen</b>.');
+q('ge',0,'Wer erfand den Buchdruck mit beweglichen Buchstaben?','Johannes Gutenberg',['Albert Einstein','Martin Luther','Karl der Große'],'<b>Gutenberg</b> druckte um 1450 in Mainz.');
+q('ge',0,'Wo fanden die ersten Olympischen Spiele statt?','in Griechenland',['in Italien','in Ägypten','in England'],'Die Spiele begannen in <b>Olympia</b> im antiken Griechenland.');
+q('ge',0,'Wer gründete Rom laut der Sage?','Romulus und Remus',['Hänsel und Gretel','Max und Moritz','Asterix und Obelix'],'Die Zwillinge <b>Romulus und Remus</b> wurden laut Sage von einer Wölfin gesäugt.');
+q('ge',0,'Wie heißt die Bilderschrift der alten Ägypter?','Hieroglyphen',['Runen','Keilschrift','Kanji'],'<b>Hieroglyphen</b> sind Bildzeichen, oft in Stein gemeißelt.');
+q('ge',0,'Wo lebten Ritter im Mittelalter oft?','auf einer Burg',['in einer Pyramide','in einem Hochhaus','in einem Iglu'],'Ritter lebten auf <b>Burgen</b>, die sie gut verteidigen konnten.');
+q('ge',1,'Welche Zahl ist die römische Zahl XIV?','14',['16','9','41'],'X = 10, IV = 4 (eins vor fünf), also <b>14</b>.');
+q('ge',1,'Was war früher: 500 v. Chr. oder 300 v. Chr.?','500 v. Chr.',['300 v. Chr.','beide gleichzeitig','das kann man nicht sagen'],'Vor Christus zählt man rückwärts: <b>500 v. Chr.</b> liegt weiter zurück.');
+q('ge',1,'Was war der Limes?','ein Grenzwall der Römer',['ein Fluss in Ägypten','eine Ritterburg','ein griechischer Tempel'],'Der <b>Limes</b> schützte das Römische Reich, er verlief auch durch Bayern.');
+q('ge',1,'Wer erreichte 1492 Amerika und hielt es für Indien?','Christoph Kolumbus',['Marco Polo','Leif Eriksson','James Cook'],'<b>Kolumbus</b> wollte nach Indien und landete in der Karibik.');
+
+// Biologie
+q('bi',0,'Welches Tier ist ein Säugetier?','Wal',['Hai','Pinguin','Frosch'],'Wale atmen Luft und säugen ihre Jungen mit Milch: <b>Säugetier</b>.');
+q('bi',0,'Wie viele Beine hat ein Insekt?','6',['4','8','10'],'Insekten haben <b>6 Beine</b>, Spinnen 8.');
+q('bi',0,'Wie viele Beine hat eine Spinne?','8',['6','10','12'],'Spinnen haben <b>8 Beine</b> und gehören nicht zu den Insekten.');
+q('bi',0,'Was ist das größte Organ des Menschen?','die Haut',['das Herz','die Leber','das Gehirn'],'Die <b>Haut</b> bedeckt den ganzen Körper.');
+q('bi',0,'Was nimmt bei einer Pflanze Wasser aus dem Boden auf?','die Wurzel',['die Blüte','das Blatt','die Frucht'],'Die <b>Wurzeln</b> saugen Wasser und Mineralstoffe auf.');
+q('bi',0,'Welches Tier ist ein Pflanzenfresser?','Kuh',['Löwe','Wolf','Hai'],'Die <b>Kuh</b> frisst Gras und Heu.');
+q('bi',0,'Was macht der Igel im Winter?','Winterschlaf',['Er zieht in den Süden','Er sammelt Nüsse','Er wechselt die Farbe'],'Der Igel hält <b>Winterschlaf</b> und lebt von seinen Fettreserven.');
+q('bi',0,'Zu welcher Tiergruppe gehört der Frosch?','Amphibien (Lurche)',['Reptilien','Fische','Säugetiere'],'Frösche leben im Wasser und an Land: <b>Amphibien</b>.');
+q('bi',0,'Was wird aus einer Kaulquappe?','ein Frosch',['ein Fisch','eine Libelle','eine Schnecke'],'Die Kaulquappe verwandelt sich nach und nach in einen <b>Frosch</b>.');
+q('bi',0,'Was haben nur Vögel?','Federn',['Flügel','Eier','einen Schnabel'],'Auch Fledermäuse haben Flügel und Schnabeltiere legen Eier, aber nur Vögel haben <b>Federn</b>.');
+q('bi',0,'Welches Organ pumpt das Blut durch den Körper?','das Herz',['die Lunge','der Magen','die Niere'],'Das <b>Herz</b> ist ein Muskel und schlägt etwa 70 Mal pro Minute.');
+q('bi',0,'Wer hilft vielen Blüten bei der Bestäubung?','Bienen',['Regenwürmer','Schnecken','Ameisen'],'<b>Bienen</b> tragen Blütenstaub von Blüte zu Blüte.');
+q('bi',1,'Was brauchen Pflanzen, um mit Licht Traubenzucker herzustellen?','Wasser und Kohlenstoffdioxid',['Sand und Salz','Sauerstoff und Eisen','Milch und Zucker'],'Das nennt man <b>Fotosynthese</b>. Dabei entsteht auch Sauerstoff.');
+q('bi',1,'Zu welcher Tiergruppe gehört die Fledermaus?','Säugetiere',['Vögel','Insekten','Reptilien'],'Fledermäuse haben Fell und säugen ihre Jungen: <b>Säugetiere</b>.');
+q('bi',1,'Was hält das Eichhörnchen im Winter?','Winterruhe',['Winterschlaf','Winterstarre','gar nichts davon'],'Es schläft viel, wacht aber auf, um zu fressen: <b>Winterruhe</b>.');
+q('bi',1,'Wie viele Knochen hat ein erwachsener Mensch ungefähr?','206',['50','106','500'],'Ein Erwachsener hat etwa <b>206</b> Knochen.');
+
+// Physik
+q('ph',0,'Bei wie viel Grad Celsius gefriert Wasser?','0 °C',['10 °C','−10 °C','100 °C'],'Bei <b>0 °C</b> wird Wasser zu Eis.');
+q('ph',0,'Bei wie viel Grad Celsius kocht Wasser (auf Meereshöhe)?','100 °C',['50 °C','80 °C','200 °C'],'Bei <b>100 °C</b> siedet Wasser.');
+q('ph',0,'Was zieht ein Magnet an?','einen Eisennagel',['ein Holzstück','eine Glasmurmel','eine Alufolie'],'Magnete ziehen <b>Eisen</b>, Nickel und Kobalt an, aber kein Aluminium.');
+q('ph',0,'Was ist schneller?','Licht',['Schall','beide gleich','ein Rennwagen'],'Darum siehst du den Blitz, bevor du den Donner hörst.');
+q('ph',0,'Welcher Stoff leitet elektrischen Strom gut?','Kupfer',['Gummi','Holz','Glas'],'Metalle wie <b>Kupfer</b> leiten Strom. Gummi isoliert.');
+q('ph',0,'Wie heißt der Übergang von flüssig zu gasförmig?','Verdampfen',['Schmelzen','Erstarren','Kondensieren'],'Wasser <b>verdampft</b> beim Kochen zu Wasserdampf.');
+q('ph',0,'Warum leuchtet der Mond?','Er wird von der Sonne angestrahlt',['Er brennt','Er ist ein Stern','Er hat eigene Lampen'],'Der Mond <b>spiegelt das Sonnenlicht</b> zurück.');
+q('ph',0,'Wie lange braucht die Erde einmal um die Sonne?','ein Jahr',['einen Tag','einen Monat','eine Woche'],'Etwa 365 Tage: <b>ein Jahr</b>.');
+q('ph',0,'Wie lange dreht sich die Erde einmal um sich selbst?','einen Tag',['eine Stunde','ein Jahr','eine Woche'],'Eine Drehung dauert etwa 24 Stunden: <b>ein Tag</b>.');
+q('ph',0,'Was passiert, wenn man zwei Nordpole von Magneten zusammenhält?','Sie stoßen sich ab',['Sie ziehen sich an','Nichts','Sie werden heiß'],'Gleiche Pole <b>stoßen sich ab</b>, ungleiche ziehen sich an.');
+q('ph',0,'Welcher Planet ist der Sonne am nächsten?','Merkur',['Venus','Erde','Mars'],'Reihenfolge: <b>Merkur</b>, Venus, Erde, Mars …');
+q('ph',0,'Was macht warme Luft?','Sie steigt nach oben',['Sie sinkt nach unten','Sie bleibt stehen','Sie wird zu Wasser'],'Warme Luft ist leichter. So fliegen auch <b>Heißluftballons</b>.');
+q('ph',1,'Wann leuchtet eine Lampe im Stromkreis?','wenn der Stromkreis geschlossen ist',['wenn der Schalter offen ist','wenn die Batterie fehlt','immer'],'Der Strom braucht einen <b>geschlossenen Kreis</b>, um zu fließen.');
+q('ph',1,'Was ist die Grundeinheit der Masse?','Kilogramm',['Meter','Liter','Sekunde'],'Masse misst man in <b>Kilogramm</b>, Länge in Meter, Zeit in Sekunden.');
+q('ph',1,'Welcher Stern ist der Erde am nächsten?','die Sonne',['der Polarstern','der Mond','der Sirius'],'Die <b>Sonne</b> ist ein Stern. Der Mond ist kein Stern.');
+
+// ---- Erweiterung des Fragenkatalogs ----
+// Deutsch
+q('de',0,'Welches Wort ist ein Verb?','schwimmen',['Schwimmbad','nass','unter'],'Verben sagen, was jemand <b>tut</b>: schwimmen.');
+q('de',0,'Welches Wort ist ein Nomen?','Freundschaft',['freundlich','anfreunden','sehr'],'Nomen kann man mit Artikel verwenden: <b>die Freundschaft</b>.');
+q('de',0,'Welcher Artikel passt zu „Sonne“?','die',['der','das','den'],'Es heißt <b>die</b> Sonne.');
+q('de',0,'Was ist die Mehrzahl von „der Baum“?','die Bäume',['die Baums','die Baumen','die Bäumer'],'Aus au wird äu: der Baum – <b>die Bäume</b>.');
+q('de',0,'Was ist die Mehrzahl von „das Kind“?','die Kinder',['die Kinds','die Kinde','die Kindern'],'das Kind – <b>die Kinder</b>.');
+q('de',0,'Wie heißt das Präteritum von „schreiben“ (ich …)?','ich schrieb',['ich schreibte','ich schrob','ich habe geschrieben'],'schreiben – <b>schrieb</b> – geschrieben.');
+q('de',0,'Wie heißt das Partizip II von „singen“?','gesungen',['gesingt','gesangen','gesang'],'singen – sang – <b>gesungen</b>.');
+q('de',0,'Wie heißt das Präteritum von „sehen“ (er …)?','er sah',['er sehte','er sieht','er sach'],'sehen – <b>sah</b> – gesehen.');
+q('de',0,'In welcher Zeitform steht: „Morgen werde ich ins Kino gehen.“?','Futur',['Präsens','Perfekt','Präteritum'],'Futur = „werden“ + Grundform: <b>werde gehen</b>.');
+q('de',0,'In welcher Zeitform steht: „Der Hund bellte laut.“?','Präteritum',['Präsens','Perfekt','Futur'],'„bellte“ ist die einfache Vergangenheit: <b>Präteritum</b>.');
+q('de',0,'Welches Wort ist richtig geschrieben?','Wasser',['Waser','Waßer','Wassa'],'Nach kurzem Vokal folgt ein Doppelkonsonant: <b>Wasser</b>.');
+q('de',0,'Welches Wort ist richtig geschrieben?','Schwimmbad',['Schwimbad','Schwimmbat','Schwiembad'],'schwimmen mit mm, Bad mit d: <b>Schwimmbad</b>.');
+q('de',0,'Welches Wort ist richtig geschrieben?','Spiegel',['Spigel','Spiegl','Spihgel'],'Langes i schreibt man meistens <b>ie</b>.');
+q('de',0,'Welches Wort ist ein Nomen und wird großgeschrieben?','Mut',['mutig','mutlos','ermutigen'],'<b>der Mut</b> ist ein Nomen, die anderen sind Adjektive oder Verben.');
+q('de',0,'Was ist der Komparativ von „groß“?','größer',['großer','am größten','größerer'],'groß – <b>größer</b> – am größten.');
+q('de',0,'Welches Wort bedeutet fast dasselbe wie „schnell“?','rasch',['langsam','laut','träge'],'Wörter mit gleicher Bedeutung heißen Synonyme: schnell = <b>rasch</b>.');
+q('de',0,'Was ist das Gegenteil von „hell“?','dunkel',['bunt','klar','sonnig'],'hell ↔ <b>dunkel</b>.');
+q('de',0,'Welches Wort passt nicht zu den anderen?','Karotte',['Apfel','Birne','Kirsche'],'Apfel, Birne und Kirsche sind Obst, die <b>Karotte</b> ist Gemüse.');
+q('de',0,'Welche Satzart ist „Mach bitte das Fenster zu!“?','Aufforderungssatz',['Fragesatz','Aussagesatz','Ausrufesatz'],'Jemand wird aufgefordert, etwas zu tun: <b>Aufforderungssatz</b>.');
+q('de',0,'Bei welchem Satz steht das Komma richtig?','Ich weiß, dass du kommst.',['Ich weiß dass, du kommst.','Ich, weiß dass du kommst.','Ich weiß dass du, kommst.'],'Vor „dass“ steht ein Komma, weil ein <b>Nebensatz</b> beginnt.');
+q('de',0,'Wer sammelte Märchen wie „Hänsel und Gretel“?','die Brüder Grimm',['Goethe und Schiller','Wilhelm Busch','Max und Moritz'],'Jacob und Wilhelm <b>Grimm</b> schrieben vor rund 200 Jahren viele Märchen auf.');
+q('de',0,'Wie beginnen viele Märchen?','Es war einmal …',['Liebes Tagebuch …','Sehr geehrte Damen und Herren …','Achtung, Achtung …'],'<b>„Es war einmal …“</b> ist der typische Märchenanfang.');
+q('de',0,'Welches Wort hat eine Vorsilbe?','verlaufen',['laufen','Lauf','läuft'],'<b>ver</b>- ist eine Vorsilbe (ein Präfix).');
+q('de',0,'Welches Wort ist ein Adjektiv?','freundlich',['Freund','befreundet sein','Freundin'],'Adjektive beschreiben Eigenschaften: <b>freundlich</b>.');
+q('de',0,'Wie viele Silben hat „Schokolade“?','4',['3','5','2'],'Scho-ko-la-de: <b>4 Silben</b>.');
+q('de',0,'Welches Wort steht im Wörterbuch zuerst?','Banane',['Birne','Brot','Butter'],'Nach dem zweiten Buchstaben ordnen: B<b>a</b> vor Bi, Br, Bu.');
+q('de',0,'Wen oder was kaufe ich? „Ich kaufe einen Apfel.“','einen Apfel',['Ich','kaufe','Ich kaufe'],'Frage nach dem Akkusativobjekt: <b>Wen oder was?</b> Einen Apfel.');
+q('de',0,'Was ist die Mehrzahl von „die Maus“?','die Mäuse',['die Mauses','die Mausen','die Mäusen'],'Aus au wird äu: <b>die Mäuse</b>.');
+q('de',0,'Welches Wort ist ein Artikel?','eine',['eins','einer Meinung','ein bisschen viel'],'Bestimmte Artikel: der, die, das. Unbestimmte: ein, <b>eine</b>.');
+q('de',1,'In welchem Fall steht „des Hauses“?','Genitiv',['Dativ','Akkusativ','Nominativ'],'Frage: <b>Wessen?</b> Wessen-Fall = Genitiv.');
+q('de',1,'Du schreibst höflich an deine Lehrerin. Welche Schreibweise stimmt?','Können Sie mir helfen?',['Können sie mir helfen?','Könnt Sie mir helfen?','Können Ihr mir helfen?'],'Die höfliche Anrede <b>Sie</b> schreibt man groß.');
+q('de',1,'Welches Wort ist eine Konjunktion?','weil',['unter','schnell','Haus'],'Konjunktionen verbinden Sätze: und, oder, <b>weil</b>, dass.');
+q('de',1,'Welches Zeichen steht vor der wörtlichen Rede? „Mama sagt ___ „Komm her!““','ein Doppelpunkt',['ein Komma','ein Punkt','ein Fragezeichen'],'Steht der Begleitsatz vorne, folgt ein <b>Doppelpunkt</b>.');
+q('de',1,'Was ist eine Fabel?','eine Geschichte, in der Tiere wie Menschen handeln',['ein Gedicht über Blumen','ein Zeitungsbericht','ein Kochrezept'],'In Fabeln sprechen <b>Tiere</b> und am Ende steht oft eine Lehre.');
+q('de',1,'Was ist das Dativobjekt in „Ich schenke meiner Oma Blumen.“?','meiner Oma',['Blumen','Ich','schenke'],'Frage: <b>Wem</b> schenke ich etwas? Meiner Oma.');
+q('de',1,'Welche Wortart ist „sie“ im Satz „Sie spielt Fußball.“?','Pronomen',['Nomen','Verb','Artikel'],'<b>Pronomen</b> stehen für ein Nomen.');
+q('de',1,'Welches Wort ist ein Adverb der Zeit?','gestern',['Garten','grün','gehen'],'<b>gestern</b> sagt, wann etwas passiert.');
+
+// Mathe
+q('ma',0,'Wie viele Zentimeter sind 1 Meter?','100',['10','1.000','60'],'1 m = <b>100 cm</b>.');
+q('ma',0,'Wie viele Sekunden hat eine Minute?','60',['100','30','24'],'1 min = <b>60 s</b>.');
+q('ma',0,'Wie viele Tage hat ein Schaltjahr?','366',['365','364','360'],'Im Schaltjahr hat der Februar 29 Tage: <b>366</b>.');
+q('ma',0,'Welche Zahl ist gerade?','348',['347','351','125'],'Gerade Zahlen enden auf 0, 2, 4, 6 oder 8: <b>348</b>.');
+q('ma',0,'Wie viele Ecken hat ein Sechseck?','6',['5','8','4'],'Sechseck = <b>6 Ecken</b> und 6 Seiten.');
+q('ma',0,'Wie groß ist ein rechter Winkel?','90°',['45°','180°','100°'],'Ein rechter Winkel hat <b>90°</b>.');
+q('ma',0,'Was ist die Hälfte von 250?','125',['150','120','25'],'250 : 2 = <b>125</b>.');
+q('ma',0,'Was ist das Doppelte von 375?','750',['650','700','775'],'375 · 2 = <b>750</b>.');
+q('ma',0,'Wie viele Millimeter sind 5 cm?','50 mm',['5 mm','500 mm','15 mm'],'1 cm = 10 mm, also 5 cm = <b>50 mm</b>.');
+q('ma',0,'Wie viele Monate haben 31 Tage?','7',['6','5','8'],'Januar, März, Mai, Juli, August, Oktober, Dezember: <b>7</b>.');
+q('ma',0,'Wie viele Minuten sind eine Viertelstunde?','15',['25','10','45'],'60 : 4 = <b>15</b> Minuten.');
+q('ma',1,'Was ist der größte gemeinsame Teiler von 12 und 18?','6',['3','2','36'],'12 und 18 sind beide durch <b>6</b> teilbar.');
+q('ma',1,'Welche Zahl ist durch 3 teilbar?','471',['472','473','475'],'Quersumme 4 + 7 + 1 = 12, und 12 ist durch 3 teilbar.');
+q('ma',1,'Wie viele Flächen hat ein Quader?','6',['4','8','12'],'Oben, unten, vorne, hinten, links, rechts: <b>6 Flächen</b>.');
+q('ma',1,'Welche Zahl ist eine Quadratzahl?','49',['48','50','27'],'49 = 7 · 7, also eine <b>Quadratzahl</b>.');
+q('ma',1,'Wie heißt das Ergebnis einer Multiplikation?','Produkt',['Summe','Differenz','Quotient'],'Plus: Summe, Minus: Differenz, Mal: <b>Produkt</b>, Geteilt: Quotient.');
+
+// Erdkunde
+q('ek',0,'Wie heißt die Hauptstadt von Österreich?','Wien',['Salzburg','Graz','Innsbruck'],'<b>Wien</b> liegt an der Donau.');
+q('ek',0,'Welche Stadt ist Sitz der Regierung der Schweiz?','Bern',['Zürich','Genf','Basel'],'<b>Bern</b> ist die Bundesstadt der Schweiz.');
+q('ek',0,'Wie heißt die Hauptstadt von Spanien?','Madrid',['Barcelona','Sevilla','Valencia'],'<b>Madrid</b> liegt in der Mitte Spaniens.');
+q('ek',0,'Welcher Ozean liegt zwischen Europa und Amerika?','Atlantik',['Pazifik','Indischer Ozean','Nordpolarmeer'],'Der <b>Atlantik</b> trennt Europa und Afrika von Amerika.');
+q('ek',0,'Welcher Fluss fließt durch Hamburg?','Elbe',['Rhein','Donau','Isar'],'Hamburg liegt an der <b>Elbe</b>.');
+q('ek',0,'Welcher Fluss fließt durch Köln?','Rhein',['Elbe','Main','Weser'],'Am <b>Rhein</b> steht der Kölner Dom.');
+q('ek',0,'Welcher Fluss fließt durch München?','Isar',['Inn','Lech','Main'],'München liegt an der <b>Isar</b>.');
+q('ek',0,'Welches ist das größte Bundesland Deutschlands?','Bayern',['Niedersachsen','Nordrhein-Westfalen','Sachsen'],'<b>Bayern</b> hat die größte Fläche.');
+q('ek',0,'Wie heißt der höchste Berg der Erde?','Mount Everest',['Kilimandscharo','Zugspitze','Mont Blanc'],'Der <b>Mount Everest</b> im Himalaya ist rund 8.850 m hoch.');
+q('ek',0,'Auf welchem Kontinent liegt Brasilien?','Südamerika',['Afrika','Nordamerika','Asien'],'Brasilien ist das größte Land <b>Südamerikas</b>.');
+q('ek',0,'Auf welchem Kontinent liegt Kenia?','Afrika',['Asien','Südamerika','Australien'],'Kenia liegt in Ostafrika.');
+q('ek',0,'Wie viele Nachbarländer hat Deutschland?','9',['5','7','12'],'Dänemark, Polen, Tschechien, Österreich, Schweiz, Frankreich, Luxemburg, Belgien, Niederlande: <b>9</b>.');
+q('ek',0,'Welches Land ist KEIN Nachbarland Deutschlands?','Italien',['Polen','Dänemark','Belgien'],'<b>Italien</b> grenzt an Österreich und die Schweiz, aber nicht an Deutschland.');
+q('ek',0,'Welcher ist der kälteste Kontinent?','Antarktika',['Europa','Asien','Nordamerika'],'Die <b>Antarktis</b> am Südpol ist fast ganz mit Eis bedeckt.');
+q('ek',0,'Was ist ein Globus?','ein kleines Modell der Erde',['eine Landkarte von Bayern','ein Kompass','ein Fernrohr'],'Ein <b>Globus</b> zeigt die Erde als Kugel.');
+q('ek',0,'In welcher Himmelsrichtung steht bei uns mittags die Sonne?','Süden',['Norden','Osten','Westen'],'Mittags steht die Sonne bei uns im <b>Süden</b>.');
+q('ek',0,'Welche Himmelsrichtung liegt zwischen Norden und Osten?','Nordosten',['Südwesten','Nordwesten','Südosten'],'Zwischen N und O liegt <b>NO</b>.');
+q('ek',0,'Wie viele Menschen leben ungefähr in Deutschland?','rund 84 Millionen',['rund 8 Millionen','rund 840 Millionen','rund 18 Millionen'],'In Deutschland leben <b>rund 84 Millionen</b> Menschen.');
+q('ek',0,'Welcher See wird „Bayerisches Meer“ genannt?','Chiemsee',['Starnberger See','Tegernsee','Ammersee'],'Der <b>Chiemsee</b> ist der größte See, der ganz in Bayern liegt.');
+q('ek',0,'An welchem Meer gibt es das Wattenmeer?','Nordsee',['Ostsee','Mittelmeer','Schwarzes Meer'],'An der <b>Nordsee</b> fällt der Meeresboden bei Ebbe trocken.');
+q('ek',0,'Welcher berühmte Vulkan liegt bei Neapel in Italien?','Vesuv',['Ätna','Fuji','Kilimandscharo'],'Der <b>Vesuv</b> begrub im Jahr 79 die Stadt Pompeji.');
+q('ek',0,'Wie viel der Erdoberfläche ist mit Wasser bedeckt?','etwa zwei Drittel',['etwa ein Viertel','etwa ein Zehntel','fast alles'],'Rund <b>71 Prozent</b> der Erde sind Wasser.');
+q('ek',0,'Wie heißt die Hauptstadt von Großbritannien?','London',['Manchester','Dublin','Edinburgh'],'<b>London</b> liegt an der Themse.');
+q('ek',0,'Wie heißt ein großes Gebiet ohne Bäume mit sehr wenig Regen?','Wüste',['Regenwald','Gletscher','Moor'],'In der <b>Wüste</b> regnet es sehr selten.');
+q('ek',1,'Wie viele Regierungsbezirke hat Bayern?','7',['5','9','12'],'Ober- und Niederbayern, Oberpfalz, Ober-, Mittel- und Unterfranken, Schwaben: <b>7</b>.');
+q('ek',1,'Zu welchem Regierungsbezirk gehört Augsburg?','Schwaben',['Oberbayern','Mittelfranken','Niederbayern'],'Augsburg ist die Hauptstadt von <b>Schwaben</b>.');
+q('ek',1,'Wie heißt der höchste Berg der Alpen?','Mont Blanc',['Zugspitze','Matterhorn','Großglockner'],'Der <b>Mont Blanc</b> ist über 4.800 m hoch.');
+q('ek',1,'Wie heißt der längste Fluss Europas?','Wolga',['Donau','Rhein','Elbe'],'Die <b>Wolga</b> fließt durch Russland.');
+q('ek',1,'Wie heißen die Linien, die von Pol zu Pol verlaufen?','Längenkreise (Meridiane)',['Breitenkreise','Höhenlinien','Wendekreise'],'<b>Meridiane</b> verbinden Nord- und Südpol.');
+q('ek',1,'Welcher ist der größte See, der ganz in Deutschland liegt?','Müritz',['Bodensee','Chiemsee','Starnberger See'],'Die <b>Müritz</b> liegt in Mecklenburg-Vorpommern. Der Bodensee gehört zu drei Ländern.');
+
+// Geschichte
+q('ge',0,'Welche Zahl ist die römische Zahl C?','100',['50','500','1.000'],'<b>C = 100</b> (von lateinisch „centum“).');
+q('ge',0,'Welche römische Zahl steht für 1.000?','M',['C','D','X'],'<b>M = 1.000</b>, D = 500, C = 100.');
+q('ge',0,'Wie viele Jahre hat ein Jahrhundert?','100',['10','1.000','50'],'Ein Jahrhundert = <b>100 Jahre</b>, ein Jahrtausend = 1.000.');
+q('ge',0,'Welches Werkzeug benutzten Menschen in der Altsteinzeit?','Faustkeil',['Hammer aus Eisen','Säge aus Stahl','Bohrmaschine'],'Der <b>Faustkeil</b> war ein behauener Stein.');
+q('ge',0,'Welche Sprache sprachen die alten Römer?','Latein',['Griechisch','Italienisch','Englisch'],'Die Römer sprachen <b>Latein</b>.');
+q('ge',0,'Welche bayerische Stadt wurde von den Römern gegründet?','Augsburg',['Nürnberg','München','Bamberg'],'<b>Augsburg</b> hieß früher Augusta Vindelicorum.');
+q('ge',0,'Wo kämpften in Rom die Gladiatoren?','im Kolosseum',['im Louvre','in einer Pyramide','auf einer Ritterburg'],'Das <b>Kolosseum</b> bot Platz für rund 50.000 Zuschauer.');
+q('ge',0,'Warum machten die alten Ägypter Mumien?','damit der Körper für das Leben nach dem Tod erhalten bleibt',['damit sie im Museum ausgestellt werden','um Stoff zu sparen','weil es Mode war'],'Die Ägypter glaubten an ein <b>Leben nach dem Tod</b>.');
+q('ge',0,'Welcher Fluss war für das alte Ägypten besonders wichtig?','Nil',['Donau','Amazonas','Rhein'],'Die Überschwemmungen des <b>Nils</b> machten die Felder fruchtbar.');
+q('ge',0,'Wer war der oberste Gott der alten Griechen?','Zeus',['Jupiter','Thor','Ra'],'<b>Zeus</b> wohnte laut Sage auf dem Olymp. Jupiter ist sein römischer Name.');
+q('ge',0,'Wie nannte man einen jungen Mann in der Ausbildung zum Ritter?','Knappe',['Mönch','Bauer','Händler'],'Erst Page, dann <b>Knappe</b>, dann Ritter.');
+q('ge',0,'Woher kamen die Wikinger?','aus Skandinavien',['aus Ägypten','aus Italien','aus China'],'Die Wikinger kamen aus dem heutigen Norwegen, Schweden und Dänemark.');
+q('ge',0,'In welchem Jahr landeten Menschen zum ersten Mal auf dem Mond?','1969',['1949','1989','2001'],'Neil Armstrong betrat den Mond im Jahr <b>1969</b>.');
+q('ge',0,'Wer baute 1886 eines der ersten Autos mit Benzinmotor?','Carl Benz',['Henry Ford','Albert Einstein','Johannes Gutenberg'],'<b>Carl Benz</b> baute seinen Motorwagen in Mannheim.');
+q('ge',0,'Welcher König ließ Schloss Neuschwanstein bauen?','König Ludwig II.',['Karl der Große','Kaiser Augustus','Napoleon'],'<b>Ludwig II.</b> war König von Bayern und liebte Märchenschlösser.');
+q('ge',0,'Was machen Archäologen?','Sie graben Überreste aus der Vergangenheit aus',['Sie bauen Häuser','Sie beobachten Sterne','Sie heilen Tiere'],'Archäologen finden Werkzeuge, Knochen oder Mauern aus <b>früheren Zeiten</b>.');
+q('ge',0,'Welche Zeit liegt am weitesten zurück?','Steinzeit',['Mittelalter','Römerzeit','Neuzeit'],'Reihenfolge: <b>Steinzeit</b>, Römerzeit, Mittelalter, Neuzeit.');
+q('ge',0,'Was malten Menschen der Steinzeit an Höhlenwände?','Tiere wie Pferde und Bisons',['Autos','Burgen','Landkarten von Europa'],'Die Höhlenbilder zeigen oft <b>Tiere</b>, die gejagt wurden.');
+q('ge',0,'In welchem Land steht die Große Mauer?','China',['Japan','Ägypten','Italien'],'Die <b>Chinesische Mauer</b> ist viele tausend Kilometer lang.');
+q('ge',0,'Wie hieß der erste römische Kaiser?','Augustus',['Cäsar','Nero','Karl'],'<b>Augustus</b> regierte ab 27 v. Chr. Cäsar war nie Kaiser.');
+q('ge',1,'In welchem Jahrhundert liegt das Jahr 1850?','19. Jahrhundert',['18. Jahrhundert','20. Jahrhundert','15. Jahrhundert'],'Die Jahre 1801 bis 1900 bilden das <b>19. Jahrhundert</b>.');
+q('ge',1,'In welchem Jahr wurde Karl der Große zum Kaiser gekrönt?','800',['1066','476','1492'],'Am Weihnachtstag des Jahres <b>800</b> in Rom.');
+q('ge',1,'Wer war der erste Bundeskanzler der Bundesrepublik Deutschland?','Konrad Adenauer',['Willy Brandt','Helmut Kohl','Otto von Bismarck'],'<b>Adenauer</b> war von 1949 bis 1963 Kanzler.');
+q('ge',1,'Wann wurde die Bundesrepublik Deutschland gegründet?','1949',['1945','1871','1990'],'Am 23. Mai <b>1949</b> trat das Grundgesetz in Kraft.');
+q('ge',1,'Woher stammt die Idee der Demokratie?','aus dem antiken Athen',['aus dem alten Ägypten','von den Wikingern','aus dem Mittelalter'],'Im alten <b>Athen</b> durften Bürger mitbestimmen.');
+q('ge',1,'Wie heißt die Schrift auf Tontafeln aus Mesopotamien?','Keilschrift',['Hieroglyphen','Runen','Druckschrift'],'Die Zeichen wurden mit einem Griffel in feuchten Ton gedrückt: <b>Keilschrift</b>.');
+
+// Biologie
+q('bi',0,'Womit atmen Fische?','mit Kiemen',['mit Lungen','mit der Haut allein','mit den Flossen'],'<b>Kiemen</b> holen den Sauerstoff aus dem Wasser.');
+q('bi',0,'Welches Tier ist ein Reptil?','Eidechse',['Frosch','Molch','Delfin'],'Reptilien haben eine trockene, schuppige Haut, wie die <b>Eidechse</b>.');
+q('bi',0,'Welches Tier ist KEIN Wirbeltier?','Regenwurm',['Katze','Forelle','Adler'],'Der <b>Regenwurm</b> hat keine Wirbelsäule.');
+q('bi',0,'Welches Tier ist ein Fleischfresser?','Wolf',['Kuh','Reh','Hase'],'Der <b>Wolf</b> jagt andere Tiere.');
+q('bi',0,'Welches Tier ist ein Allesfresser?','Wildschwein',['Kuh','Reh','Pferd'],'Das <b>Wildschwein</b> frisst Pflanzen und kleine Tiere.');
+q('bi',0,'Welches Tier ist ein Wiederkäuer?','Kuh',['Hund','Katze','Huhn'],'Die <b>Kuh</b> kaut ihr Futter zweimal.');
+q('bi',0,'Von welchem Wildtier stammt der Hund ab?','Wolf',['Fuchs','Bär','Luchs'],'Alle Hunde stammen vom <b>Wolf</b> ab.');
+q('bi',0,'Welches Haustier kann seine Krallen einziehen?','Katze',['Hund','Pferd','Meerschweinchen'],'Die <b>Katze</b> schleicht dadurch leise.');
+q('bi',0,'Wie nennt man ein junges Pferd?','Fohlen',['Kalb','Ferkel','Lamm'],'Ein junges Pferd ist ein <b>Fohlen</b>.');
+q('bi',0,'Wie nennt man das Junge vom Schaf?','Lamm',['Fohlen','Kitz','Welpe'],'Das Schafjunge heißt <b>Lamm</b>.');
+q('bi',0,'Wo entstehen bei einer Pflanze die Samen?','in der Blüte',['in der Wurzel','im Stängel','im Blatt'],'Aus der befruchteten <b>Blüte</b> entstehen Frucht und Samen.');
+q('bi',0,'Welcher Baum ist ein Laubbaum?','Eiche',['Fichte','Kiefer','Tanne'],'Die <b>Eiche</b> hat Blätter, die anderen haben Nadeln.');
+q('bi',0,'Welches Organ brauchen wir zum Atmen?','die Lunge',['der Magen','die Leber','die Niere'],'Die <b>Lunge</b> nimmt Sauerstoff aus der Luft auf.');
+q('bi',0,'Wie heißen die ersten Zähne von Kindern?','Milchzähne',['Weisheitszähne','Eckzähne','Backenzähne'],'Die <b>Milchzähne</b> fallen nach und nach aus.');
+q('bi',0,'Welcher Knochen schützt das Gehirn?','der Schädel',['die Rippen','das Becken','die Wirbelsäule'],'Der <b>Schädel</b> ist wie ein Helm.');
+q('bi',0,'Wie viele Sinne hat der Mensch klassisch?','5',['3','7','10'],'Sehen, Hören, Riechen, Schmecken, Tasten: <b>5</b>.');
+q('bi',0,'In welchem Lebensmittel steckt viel Vitamin C?','Paprika',['Nudeln','Butter','Zucker'],'<b>Paprika</b>, Zitrusfrüchte und Kiwis haben viel Vitamin C.');
+q('bi',0,'Welcher Vogel fliegt im Herbst in den Süden?','Storch',['Spatz','Taube','Elster'],'Der <b>Storch</b> ist ein Zugvogel und überwintert in Afrika.');
+q('bi',0,'Was kommt beim Schmetterling zwischen Raupe und fertigem Falter?','Puppe',['Ei','Larve im Wasser','Kokosnuss'],'Ei → Raupe → <b>Puppe</b> → Schmetterling.');
+q('bi',0,'Welches Tier ist ein Insekt?','Marienkäfer',['Spinne','Regenwurm','Schnecke'],'Der <b>Marienkäfer</b> hat 6 Beine.');
+q('bi',0,'Woraus machen Bienen Honig?','aus Blütennektar',['aus Blättern','aus Wasser','aus Baumrinde'],'Bienen sammeln <b>Nektar</b> und verarbeiten ihn zu Honig.');
+q('bi',0,'Was ist ein Fliegenpilz?','ein giftiger Pilz',['ein essbarer Speisepilz','eine Blume','ein Insekt'],'Der rote Pilz mit weißen Punkten ist <b>giftig</b>.');
+q('bi',0,'Was frisst eine Raupe hauptsächlich?','Blätter',['Fleisch','Steine','Fische'],'Raupen fressen vor allem <b>Blätter</b>.');
+q('bi',1,'Welche Tiere sind wechselwarm?','Eidechsen',['Hunde','Vögel','Menschen'],'Bei <b>wechselwarmen</b> Tieren hängt die Körpertemperatur von der Umgebung ab.');
+q('bi',1,'Wie viele Mägen (Abschnitte) hat eine Kuh?','4',['1','2','6'],'Pansen, Netzmagen, Blättermagen, Labmagen: <b>4</b>.');
+q('bi',1,'Welcher Nadelbaum verliert im Winter seine Nadeln?','Lärche',['Fichte','Tanne','Kiefer'],'Die <b>Lärche</b> wirft im Herbst ihre Nadeln ab.');
+q('bi',1,'Welches Lebensmittel enthält viel Eiweiß?','Quark',['Gummibärchen','Apfelsaft','Butter'],'<b>Quark</b>, Eier, Fleisch und Bohnen enthalten viel Eiweiß.');
+q('bi',1,'Wie finden Fledermäuse im Dunkeln den Weg?','mit Ultraschall-Rufen und Echo',['mit sehr guten Augen','mit dem Geruch allein','mit einem eingebauten Kompass'],'Sie hören das <b>Echo</b> ihrer Rufe.');
+q('bi',1,'Wohin bringt das Blut den Sauerstoff?','zu allen Körperzellen',['nur ins Gehirn','nur in die Haare','in den Magen'],'Das Blut versorgt <b>alle Zellen</b> mit Sauerstoff.');
+
+// Physik / Natur und Technik
+q('ph',0,'Wie heißt der Übergang von fest zu flüssig?','Schmelzen',['Verdampfen','Erstarren','Kondensieren'],'Eis <b>schmilzt</b> zu Wasser.');
+q('ph',0,'Womit misst man die Temperatur?','mit einem Thermometer',['mit einem Lineal','mit einer Waage','mit einem Kompass'],'Ein <b>Thermometer</b> zeigt die Temperatur an.');
+q('ph',0,'Warum kann man im Weltall keinen Schall hören?','weil es dort keine Luft gibt',['weil es zu dunkel ist','weil es zu kalt ist','weil die Sterne zu laut sind'],'Schall braucht einen <b>Stoff wie Luft</b>, um sich auszubreiten.');
+q('ph',0,'Was ist ein Echo?','zurückgeworfener Schall',['ein sehr leiser Ton','ein Lichtstrahl','ein Magnet'],'Schall prallt zum Beispiel an einer Felswand ab und <b>kommt zurück</b>.');
+q('ph',0,'Woraus besteht weißes Sonnenlicht?','aus allen Regenbogenfarben',['nur aus Gelb','nur aus Weiß','aus Wärme allein'],'Ein Prisma zerlegt Licht in die <b>Regenbogenfarben</b>.');
+q('ph',0,'Wie viele Planeten hat unser Sonnensystem?','8',['7','9','12'],'Merkur, Venus, Erde, Mars, Jupiter, Saturn, Uranus, Neptun: <b>8</b>.');
+q('ph',0,'Welcher ist der größte Planet?','Jupiter',['Saturn','Erde','Mars'],'Der <b>Jupiter</b> ist mehr als elfmal so breit wie die Erde.');
+q('ph',0,'Welcher Planet wird „Roter Planet“ genannt?','Mars',['Venus','Jupiter','Merkur'],'Der <b>Mars</b> sieht wegen rostigen Staubs rötlich aus.');
+q('ph',0,'Wie lange braucht der Mond ungefähr einmal um die Erde?','etwa einen Monat',['einen Tag','eine Woche','ein Jahr'],'Etwa 27 bis 29 Tage, daher kommt das Wort <b>Monat</b>.');
+q('ph',0,'Warum fällt ein Apfel vom Baum nach unten?','wegen der Erdanziehung',['wegen des Windes','weil er schwer werden will','wegen des Mondlichts'],'Die <b>Schwerkraft</b> der Erde zieht alles nach unten.');
+q('ph',0,'Welche Kraft bremst einen rollenden Ball?','Reibung',['Magnetkraft','Licht','Schall'],'Durch <b>Reibung</b> wird der Ball langsamer.');
+q('ph',0,'Was schwimmt auf Wasser?','ein Holzstück',['ein Stein','ein Eisennagel','eine Münze'],'<b>Holz</b> ist leichter als Wasser gleicher Größe.');
+q('ph',0,'Was braucht ein Feuer außer Brennstoff und Hitze?','Sauerstoff',['Wasser','Sand','Stickstoff'],'Ohne <b>Sauerstoff</b> geht ein Feuer aus.');
+q('ph',0,'Welche Energie nutzt eine Solaranlage?','Sonnenenergie',['Windenergie','Wasserkraft','Kohle'],'Solarzellen wandeln <b>Sonnenlicht</b> in Strom um.');
+q('ph',0,'Was macht ein Schalter im Stromkreis?','Er öffnet oder schließt den Stromkreis',['Er erzeugt Strom','Er speichert Licht','Er macht den Strom wärmer'],'Mit dem Schalter wird der Stromkreis <b>unterbrochen oder geschlossen</b>.');
+q('ph',0,'Warum gibt es Tag und Nacht?','weil sich die Erde um sich selbst dreht',['weil die Sonne ausgeht','weil der Mond die Sonne verdeckt','weil die Erde stillsteht'],'Die Seite, die zur Sonne zeigt, hat <b>Tag</b>.');
+q('ph',0,'Warum zeigt die Kompassnadel nach Norden?','Sie ist ein Magnet und richtet sich am Erdmagnetfeld aus',['Sie ist schwer','Der Wind dreht sie','Sie folgt der Sonne'],'Die Erde wirkt wie ein großer <b>Magnet</b>.');
+q('ph',0,'Was wirft einen Schatten?','ein Gegenstand, der Licht abhält',['ein Spiegel im Dunkeln','eine Glasscheibe','die Luft'],'Wo das Licht <b>nicht hinkommt</b>, entsteht Schatten.');
+q('ph',1,'Warum beschlägt der Spiegel nach dem Duschen?','Wasserdampf kondensiert am kalten Spiegel',['Der Spiegel schwitzt','Das Licht wird nass','Der Spiegel schmilzt'],'Gas wird zu Flüssigkeit: <b>Kondensieren</b>.');
+q('ph',1,'Welche Spannung hat eine Steckdose in Deutschland?','230 Volt',['12 Volt','1,5 Volt','1.000 Volt'],'Haushaltssteckdosen haben <b>230 V</b>. Darum nie daran basteln!');
+q('ph',1,'Warum schwimmt Eis auf Wasser?','weil Eis eine geringere Dichte hat',['weil Eis Luftblasen braucht','weil Eis kalt ist','weil Wasser Eis abstößt'],'Wasser dehnt sich beim Gefrieren aus, Eis ist dadurch <b>leichter</b> als gleich viel Wasser.');
+q('ph',1,'Woraus besteht Luft hauptsächlich?','Stickstoff',['Sauerstoff','Kohlenstoffdioxid','Wasserstoff'],'Etwa 78 % der Luft sind <b>Stickstoff</b>, rund 21 % Sauerstoff.');
+q('ph',1,'Wie lange braucht das Sonnenlicht ungefähr bis zur Erde?','etwa 8 Minuten',['eine Sekunde','einen Tag','ein Jahr'],'Licht ist sehr schnell, aber die Sonne ist 150 Millionen km entfernt: <b>etwa 8 Minuten</b>.');
+q('ph',1,'Warum gibt es Jahreszeiten?','weil die Erdachse schräg steht',['weil die Sonne mal näher und mal weiter weg ist','weil der Mond die Erde wärmt','weil die Erde sich schneller dreht'],'Durch die <b>schräge Erdachse</b> bekommt jede Halbkugel im Jahr unterschiedlich viel Sonne.');
+q('ph',1,'Was macht eine Lupe?','Sie lässt Dinge größer erscheinen',['Sie macht Dinge leichter','Sie erzeugt Strom','Sie misst die Temperatur'],'Eine Lupe ist eine <b>Sammellinse</b>.');
+
+/* ---------- Rechenaufgaben erzeugen ---------- */
+function genMath(lv){
+  const types=lv?['add','sub','mul','div','pvs','neg','pow','klam','mul2','conv','text','text','seq','time']:['add','sub','mul','div','pvs','conv','conv','text','text','text','seq','time'];
+  const t=pick(types);let text,ans,x,ex=[],unit='',full=null;
+  const NAMES=['Lena','Ben','Mia','Paul','Emma','Noah','Lea','Finn','Hannah','Elias'];
+  if(t==='add'){const a=ri(120,899),b=ri(110,899);ans=a+b;text=`${fmt(a)} + ${fmt(b)}`;x='Stellenweise rechnen: Einer, dann Zehner, dann Hunderter.';}
+  else if(t==='sub'){const a=ri(400,999),b=ri(105,a-40);ans=a-b;text=`${fmt(a)} − ${fmt(b)}`;x=`Probe: ${fmt(ans)} + ${fmt(b)} = ${fmt(a)}.`;}
+  else if(t==='mul'){const a=ri(3,9);let b=ri(12,25);if(b===20)b=21;ans=a*b;text=`${a} · ${b}`;x=`Zerlegen: ${a} · ${b-b%10} + ${a} · ${b%10} = ${a*(b-b%10)} + ${a*(b%10)}.`;ex=[a*(b-b%10)+b%10];}
+  else if(t==='div'){const b=ri(3,9),r=ri(6,15),a=b*r;ans=r;text=`${a} : ${b}`;x=`Probe: ${r} · ${b} = ${a}.`;}
+  else if(t==='pvs'){const a=ri(2,20),b=ri(2,9),c=ri(2,9);ans=a+b*c;text=`${a} + ${b} · ${c}`;x=`Punkt vor Strich: erst ${b} · ${c} = ${b*c}, dann + ${a}.`;ex=[(a+b)*c];}
+  else if(t==='neg'){ if(Math.random()<.5){const a=ri(-15,-2),b=ri(3,20);ans=a+b;text=`(${fmt(a)}) + ${b}`;x=`Von ${fmt(a)} aus ${b} Schritte nach rechts auf dem Zahlenstrahl.`;ex=[a-b,-ans];}
+    else{const a=ri(2,12),b=ri(a+2,a+15);ans=a-b;text=`${a} − ${b}`;x=`${b} ist größer als ${a}, also wird das Ergebnis negativ: ${fmt(ans)}.`;ex=[b-a];}}
+  else if(t==='pow'){const bs=ri(2,6),e=bs<=3?ri(2,4):ri(2,3),sup={2:'²',3:'³',4:'⁴'}[e];ans=bs**e;text=`${bs}${sup}`;x=`${bs}${sup} = ${Array(e).fill(bs).join(' · ')} = ${ans}.`;ex=[bs*e];}
+  else if(t==='klam'){const a=ri(2,9),b=ri(2,9),c=ri(2,8);ans=(a+b)*c;text=`(${a} + ${b}) · ${c}`;x=`Klammer zuerst: ${a} + ${b} = ${a+b}, dann · ${c}.`;ex=[a+b*c];}
+  else if(t==='mul2'){const a=ri(12,25),b=ri(11,19);ans=a*b;text=`${a} · ${b}`;x=`Zerlegen: ${a} · 10 + ${a} · ${b-10} = ${a*10} + ${a*(b-10)}.`;}
+  else if(t==='conv'){
+    const [u1,u2,f,v]=pick([['m','cm',100,ri(2,9)],['km','m',1000,ri(2,9)],['kg','g',1000,ri(2,9)],['h','min',60,ri(2,5)],['min','s',60,ri(2,6)],['cm','mm',10,ri(3,25)],['€','ct',100,ri(2,15)],['t','kg',1000,ri(2,6)]]);
+    ans=v*f;unit=' '+u2;full=`Wie viel ist ${v} ${u1} in ${u2}?`;x=`1 ${u1} = ${fmt(f)} ${u2}, also ${v} · ${fmt(f)} = ${fmt(ans)} ${u2}.`;
+    ex=[ans/10,ans*10,v+f].filter(Number.isInteger);}
+  else if(t==='text'){const N=pick(NAMES),k=ri(0,lv?5:4);
+    if(k===0){const a=ri(23,68),b=ri(15,49);ans=a+b;full=`${N} hat ${a} Sammelkarten und bekommt ${b} dazu. Wie viele sind es jetzt?`;x=`${a} + ${b} = ${ans}.`;ex=[a-b];}
+    else if(k===1){const p=ri(40,60),b=ri(12,p-5);ans=p-b;full=`Ein Bus hat ${p} Sitzplätze. ${b} sind besetzt. Wie viele sind noch frei?`;x=`${p} − ${b} = ${ans}.`;ex=[p+b];}
+    else if(k===2){const n=ri(3,8),e=ri(4,9),tot=n*e;ans=e;full=`${n} Kinder teilen ${tot} Bonbons gerecht auf. Wie viele bekommt jedes Kind?`;x=`${tot} : ${n} = ${e}.`;ex=[tot-n];}
+    else if(k===3){const pr=ri(3,9),n=ri(4,9);ans=pr*n;unit=' €';full=`Ein Heft kostet ${pr} €. ${N} kauft ${n} Hefte. Wie viel muss ${N} bezahlen?`;x=`${n} · ${pr} € = ${ans} €.`;ex=[pr+n];}
+    else if(k===4){const eu=v=>v.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+      const s=pick([5,10,20]),pr=ri(2,4)+pick([0,.5]),chg=s-pr;const w=new Set();
+      [chg+1,chg-1,chg+.5,chg-.5,pr].forEach(v=>{if(v>0&&v!==chg&&w.size<3)w.add(v);});
+      return {s:'ma',t:`${N} kauft ein Eis für ${eu(pr)} und bezahlt mit einem ${s}-€-Schein. Wie viel Wechselgeld gibt es?`,a:eu(chg),w:[...w].map(eu),x:`${s} € − ${eu(pr)} = ${eu(chg)}.`};}
+    else{const d=ri(2,6);ans=d*7;unit=' km';full=`${N} fährt jeden Tag ${d} km mit dem Rad. Wie viele Kilometer sind das in einer Woche?`;x=`Eine Woche hat 7 Tage: 7 · ${d} = ${ans} km.`;ex=[d*5,d*6];}}
+  else if(t==='seq'){
+    if(lv&&Math.random()<.4){const a=ri(2,5);ans=a*16;full=`Wie geht die Zahlenfolge weiter? ${a}, ${a*2}, ${a*4}, ${a*8}, …`;x='Die Zahl wird immer verdoppelt.';ex=[a*12,a*10];}
+    else{const a=ri(2,20),d=ri(3,12);ans=a+4*d;full=`Wie geht die Zahlenfolge weiter? ${a}, ${a+d}, ${a+2*d}, ${a+3*d}, …`;x=`Es kommt immer ${d} dazu.`;ex=[ans+d,ans-1];}}
+  else{const h=ri(13,18),m=pick([0,10,15,20,30,40,45,50]),dur=pick([45,50,75,90,95,105,110]),end=h*60+m+dur;
+    const tm=v=>`${Math.floor(v/60)}:${String(v%60).padStart(2,'0')} Uhr`;
+    const w=new Set();for(const o of shuffle([-10,10,60,-60,30,-30])){if(w.size>=3)break;w.add(tm(end+o));}
+    return {s:'ma',t:`Ein Film beginnt um ${tm(h*60+m)} und dauert ${dur} Minuten. Wann ist er zu Ende?`,a:tm(end),w:[...w],
+      x:`${dur} Minuten sind ${Math.floor(dur/60)} h ${dur%60} min. Ergebnis: ${tm(end)}.`};}
+  const neg=t==='neg';
+  const set=new Set();ex.forEach(e=>{if(e!==ans&&Number.isFinite(e)&&(neg||e>=0))set.add(e);});
+  for(const o of shuffle([1,-1,2,-2,10,-10,5,-5,100,-100,11,-9])){if(set.size>=3)break;const v=ans+o;if(v!==ans&&(neg||v>=0))set.add(v);}
+  return {s:'ma',t:full||`${text} = ?`,a:fmt(ans)+unit,w:[...set].slice(0,3).map(v=>fmt(v)+unit),x};
+}
+
+/* ---------- Runde zusammenstellen ---------- */
+function pickStatic(s){
+  const ok=it=>it.s===s&&(S.level===1||it.l===0);
+  let pool=Q.filter(it=>ok(it)&&!S.used.includes(it.id));
+  if(!pool.length){S.used=S.used.filter(id=>!ok(Q[id]));pool=Q.filter(ok);}
+  const it=pick(pool);S.used.push(it.id);return it;
+}
+function buildRound(){
+  const slots=shuffle(['ma','ma','ma','de','de','ek','ge','bi','ph',pick(['de','ek','ge','bi','ph'])]);
+  let staticMath=0;
+  return slots.map(s=>{
+    let it;
+    if(s==='ma'&&(staticMath>=1||Math.random()<.6)) it=genMath(S.level);
+    else{ it=pickStatic(s); if(s==='ma')staticMath++; }
+    return {s:it.s,t:it.t,a:it.a,x:it.x,opts:shuffle([it.a,...it.w])};
+  });
+}
+
+/* ---------- Ansichten ---------- */
+const views=['start','quiz','result','game'];
+function show(v){views.forEach(n=>{$('#s-'+n).hidden=n!==v;});$('#seg').classList.toggle('locked',v==='quiz'||v==='game');$('#main').scrollTop=0;}
+
+function renderHeader(){
+  $('#lv0').setAttribute('aria-pressed',S.level===0);$('#lv1').setAttribute('aria-pressed',S.level===1);
+  $('#total').textContent=fmt(S.total);
+}
+function setLevel(l){ if($('#seg').classList.contains('locked'))return; S.level=l;save();renderHeader(); }
+$('#lv0').onclick=()=>setLevel(0);$('#lv1').onclick=()=>setLevel(1);
+
+const ICONS={
+  katapult:'<svg viewBox="0 0 32 32" width="30" height="30"><path d="M9 29V19l-4-6M9 19l4-6" fill="none" stroke="var(--ge)" stroke-width="3" stroke-linecap="round"/><circle cx="9" cy="10" r="3" fill="var(--de)"/><rect x="19" y="21" width="5" height="8" rx="1" fill="var(--ma)"/><rect x="25" y="21" width="5" height="8" rx="1" fill="var(--ek)"/><rect x="22" y="13" width="5" height="8" rx="1" fill="var(--bi)"/></svg>',
+  balloons:'<svg viewBox="0 0 32 32" width="30" height="30"><ellipse cx="12" cy="11" rx="6" ry="7.5" fill="var(--de)"/><ellipse cx="21" cy="13" rx="6" ry="7.5" fill="var(--ma)"/><path d="M12 19c0 4 3 5 3 9M21 21c0 3-3 4-5 7" fill="none" stroke="var(--muted)" stroke-width="1.5"/></svg>',
+  fruit:'<svg viewBox="0 0 32 32" width="30" height="30"><circle cx="13" cy="18" r="8" fill="var(--de)"/><circle cx="21" cy="13" r="6" fill="var(--ph)"/><path d="M4 28L28 5" stroke="var(--ink)" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  torwand:'<svg viewBox="0 0 32 32" width="30" height="30"><rect x="3" y="4" width="26" height="16" rx="2" fill="var(--ma)"/><circle cx="10" cy="15" r="3" fill="#14181f"/><circle cx="22" cy="9" r="3" fill="#14181f"/><circle cx="16" cy="26" r="4" fill="#fff" stroke="#22262e" stroke-width="1.5"/></svg>',
+  maulwurf:'<svg viewBox="0 0 32 32" width="30" height="30"><ellipse cx="16" cy="26" rx="12" ry="4" fill="var(--ge)"/><path d="M8 26a8 10 0 0 1 16 0z" fill="#6e5d52"/><circle cx="13" cy="19" r="1.4" fill="#1b1b1b"/><circle cx="19" cy="19" r="1.4" fill="#1b1b1b"/><circle cx="16" cy="22" r="1.8" fill="#f08a9a"/></svg>'
+};
+const GAMES=[
+  {key:'katapult',name:'Katapult',secs:120,info:'2 Minuten',hint:'Ziehe die Schleuder nach hinten und lass los. Wirf alle Dosen um, du hast drei Würfe pro Turm.'},
+  {key:'balloons',name:'Ballons platzen',secs:60,info:'60 Sekunden',hint:'Tippe die Ballons an, bevor sie wegfliegen. Goldene Ballons zählen 3 Punkte.'},
+  {key:'fruit',name:'Obst-Schnitt',secs:60,info:'60 Sekunden',hint:'Wische durch das Obst. Drei Früchte in einem Zug geben Bonus. Finger weg von den Bomben!'},
+  {key:'torwand',name:'Torwandschießen',secs:90,info:'90 Sekunden',hint:'Wische vom Ball aus nach oben. Die Richtung bestimmt links oder rechts, der Schwung die Höhe. Unten links gibt es 2, oben rechts 3 Punkte.'},
+  {key:'maulwurf',name:'Maulwurf hauen',secs:60,info:'60 Sekunden',hint:'Tippe die Maulwürfe an, bevor sie verschwinden. Goldene zählen 3 Punkte. Igel nicht antippen, die kosten 2 Punkte.'}
+];
+
+function renderPicks(){
+  const box=$('#picks');box.innerHTML='';const cur=S.next%GAMES.length;
+  GAMES.forEach((gm,i)=>{const b=document.createElement('button');b.type='button';b.className='pick';
+    b.setAttribute('role','radio');b.setAttribute('aria-checked',i===cur);
+    b.innerHTML=`<span class="ico">${ICONS[gm.key]}</span><b></b><small>${gm.info}</small>`;b.querySelector('b').textContent=gm.name;
+    b.onclick=()=>{S.next=i;save();renderPicks();};box.appendChild(b);});
+}
+function renderStart(){
+  renderHeader();
+  const g=GAMES[S.next%GAMES.length];
+  $('#roundNo').textContent='Runde '+(S.rounds+1);
+  renderPicks();
+  $('#stRounds').textContent=S.rounds;$('#stRight').textContent=S.right;$('#stGames').textContent=S.games;
+  show('start');
+}
+
+/* ---------- Quiz ---------- */
+let R=null;
+const GOAL=60;
+$('#go').onclick=()=>{R={items:buildRound(),i:0,pts:0,streak:0,right:0,marks:[]};save();show('quiz');renderQ();};
+
+function renderMarks(){
+  const m=$('#marks');m.innerHTML='';
+  for(let k=0;k<10;k++){const d=document.createElement('div');d.className='mark';
+    if(R.marks[k]===true){d.classList.add('ok');d.textContent='✓';}
+    else if(R.marks[k]===false){d.classList.add('bad');d.textContent='✗';}
+    else if(k===R.i)d.classList.add('cur');
+    m.appendChild(d);}
+}
+function renderQ(){
+  const it=R.items[R.i];const [nm,col]=SUB[it.s];
+  const tag=$('#qTag');tag.textContent=nm;tag.style.setProperty('--sc',`var(${col})`);
+  $('#qNo').textContent=`Frage ${R.i+1} von 10`;$('#qPts').textContent=R.pts;
+  $('#qText').textContent=it.t;renderMarks();
+  const box=$('#answers');box.innerHTML='';
+  it.opts.forEach((o,k)=>{const b=document.createElement('button');b.type='button';b.className='ans';
+    b.innerHTML=`<span class="k">${'ABCD'[k]}</span><span></span>`;b.lastChild.textContent=o;
+    b.onclick=()=>answer(b,o);box.appendChild(b);});
+  $('#fb').hidden=true;
+}
+function answer(btn,o){
+  const it=R.items[R.i];const ok=o===it.a;
+  document.querySelectorAll('.ans').forEach(b=>{b.disabled=true;const txt=b.lastChild.textContent;
+    if(txt===it.a)b.classList.add('ok');else if(b===btn)b.classList.add('bad');else b.classList.add('dim');});
+  let bonus=0;
+  if(ok){R.streak++;R.right++;bonus=R.streak>=3?5:0;R.pts+=10+bonus;}else R.streak=0;
+  R.marks[R.i]=ok;
+  const rm=$('#remark');rm.className='remark '+(ok?'ok':'bad');
+  rm.textContent=ok?pick(['Richtig!','Super!','Genau!','Klasse!']):'Leider falsch.';
+  $('#bonus').textContent=bonus?`Serie! +${10+bonus} Punkte`:(ok?'+10 Punkte':'');
+  $('#expl').innerHTML=(ok?'':`Richtig ist: <b>${esc(it.a)}</b>. `)+it.x;
+  $('#qPts').textContent=R.pts;
+  R.marks.length;renderMarksAfter();
+  $('#next').textContent=R.i===9?'Ergebnis ansehen':'Weiter';
+  $('#fb').hidden=false;$('#fb').scrollIntoView({block:'nearest',behavior:'smooth'});
+}
+function renderMarksAfter(){const keep=R.i;R.i=-1;renderMarks();R.i=keep;}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+$('#next').onclick=()=>{ if(R.i<9){R.i++;renderQ();} else finishRound(); };
+
+function finishRound(){
+  S.rounds++;S.total+=R.pts;S.right+=R.right;
+  const won=R.pts>=GOAL;if(won)S.games++;save();renderHeader();
+  $('#rScore').textContent=R.pts;
+  const r=R.right;
+  $('#rRemark').textContent=r===10?'Spitze, alles richtig!':r>=8?'Prima gemacht!':r>=6?'Gut so, weiter!':r>=4?'Da geht noch was.':'Nicht aufgeben!';
+  $('#rRemark').className='remark '+(r>=6?'ok':'bad');
+  $('#rRight').textContent=`${r} von 10 Fragen richtig.`;
+  $('#rMeter').style.width=Math.min(100,R.pts/GOAL*100)+'%';
+  const g=GAMES[S.next%GAMES.length];const btns=$('#rBtns');btns.innerHTML='';
+  if(won){
+    $('#rMsg').innerHTML=`Belohnung freigeschaltet: <b>${g.name}</b> für ${g.info}.`;
+    const b=mkBtn('Jetzt spielen','btn',()=>startGame(S.next%GAMES.length));btns.append(b,mkBtn('Lieber weiterlernen','btn ghost',renderStart));b.focus();
+  }else{
+    $('#rMsg').innerHTML=`Für ein Spiel brauchst du ${GOAL} Punkte. Dir fehlen noch <b>${GOAL-R.pts}</b>.`;
+    btns.append(mkBtn('Neue Runde','btn',()=>$('#go').click()),mkBtn('Zur Übersicht','btn ghost',renderStart));
+  }
+  show('result');
+}
+function mkBtn(t,c,fn){const b=document.createElement('button');b.type='button';b.className=c;b.textContent=t;b.onclick=fn;return b;}
+
+/* ---------- Spiele ---------- */
+const cv=$('#cv');const ctx=cv.getContext('2d');
+let G=null;
+const tok=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+function colors(){return {sheet:tok('--sheet'),soft:tok('--soft'),grid:tok('--grid'),ink:tok('--ink'),muted:tok('--muted'),line:tok('--line'),accent:tok('--accent'),ok:tok('--ok'),bad:tok('--bad'),subj:['--de','--ma','--ek','--ge','--bi','--ph'].map(tok)};}
+function fit(aspect,reserve){
+  const cw=$('#cwrap').clientWidth;const maxH=Math.max(240,window.innerHeight-reserve);
+  const w=Math.floor(Math.min(cw,maxH*aspect,620));const h=Math.floor(w/aspect);
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  cv.style.width=w+'px';cv.style.height=h+'px';cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);return {w,h};
+}
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+function local(e){const r=cv.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+function paper(g){const c=g.c;ctx.fillStyle=c.sheet;ctx.fillRect(0,0,g.w,g.h);ctx.strokeStyle=c.grid;ctx.lineWidth=1;ctx.beginPath();
+  for(let x=22;x<g.w;x+=22){ctx.moveTo(x+.5,0);ctx.lineTo(x+.5,g.h);}for(let y=22;y<g.h;y+=22){ctx.moveTo(0,y+.5);ctx.lineTo(g.w,y+.5);}ctx.stroke();}
+function popup(g,x,y,v){g.txt.push({x,y,v,life:1});}
+function stepTxt(g,dt){g.txt.forEach(p=>{p.y-=40*dt;p.life-=dt;});g.txt=g.txt.filter(p=>p.life>0);}
+function drawTxt(g){ctx.fillStyle=g.c.ink;ctx.font='700 22px Fredoka, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  g.txt.forEach(p=>{ctx.globalAlpha=Math.max(0,Math.min(1,p.life*1.5));ctx.fillText(p.v,Math.max(60,Math.min(g.w-60,p.x)),p.y);});ctx.globalAlpha=1;}
+function clock(g,t){if(g.last==null)g.last=t;const dt=Math.min(.04,(t-g.last)/1000);g.last=t;return dt;}
+function capture(e){try{cv.setPointerCapture(e.pointerId);}catch(_){}}
+const RES=300;
+
+/* Katapult: Dosen von Tischen schießen */
+const LAYOUTS=[
+  [{cx:.74,rows:[3,2,1],th:0}],
+  [{cx:.76,rows:[1,1,1,1],th:.18}],
+  [{cx:.72,rows:[4,3,2,1],th:.08}],
+  [{cx:.6,rows:[2,1],th:.24},{cx:.86,rows:[2,1],th:.06}],
+  [{cx:.78,rows:[3,3,3],th:.12}],
+  [{cx:.64,rows:[1,1],th:.32},{cx:.85,rows:[3,2,1],th:0}]
+];
+const Katapult={init(g){
+  g.txt=[];g.last=null;g.lvl=0;
+  const lay=()=>{const {w,h}=fit(4/3,RES);g.w=w;g.h=h;g.ground=h*.9;g.grav=h*1.8;
+    g.sl={x:w*.15,y:g.ground-h*.26};g.br=Math.max(7,w*.021);g.maxPull=w*.13;g.k=Math.sqrt(g.grav*w*1.15)/g.maxPull;
+    g.cw=w*.046;g.ch=w*.07;};
+  const resetBall=()=>{g.ball={x:g.sl.x,y:g.sl.y,vx:0,vy:0,st:'ready',t:0};g.pull={x:0,y:0};};
+  const build=()=>{const L=LAYOUTS[g.lvl%LAYOUTS.length];g.tables=[];g.cans=[];g.shots=3;g.wait=0;g.cleared=false;const gap=2;
+    L.forEach(st=>{const top=g.ground-st.th*g.h;const tw=Math.max(...st.rows)*(g.cw+gap)+14;
+      if(st.th>0)g.tables.push({x:st.cx*g.w-tw/2,y:top,w:tw,h:g.ground-top});
+      let prev=[];
+      st.rows.forEach((n,r)=>{const tot=n*g.cw+(n-1)*gap,x0=st.cx*g.w-tot/2,row=[];
+        for(let i=0;i<n;i++){const can={x:x0+i*(g.cw+gap),y:top-(r+1)*g.ch,st:'stand',vx:0,vy:0,rot:0,vr:0,counted:false,col:g.c.subj[(r+i+g.lvl)%6]};
+          can.sup=prev.filter(p=>p.x<can.x+g.cw-1&&p.x+g.cw>can.x+1);row.push(can);g.cans.push(can);}
+        prev=row;});});
+    resetBall();};
+  g.relayout=()=>{lay();build();};
+  lay();build();
+
+  const sig={signal:g.ac.signal};
+  const drag=e=>{const p=local(e);let dx=p.x-g.sl.x,dy=p.y-g.sl.y;const d=Math.hypot(dx,dy);if(d>g.maxPull){dx*=g.maxPull/d;dy*=g.maxPull/d;}
+    g.pull={x:dx,y:dy};g.ball.x=g.sl.x+dx;g.ball.y=g.sl.y+dy;};
+  cv.addEventListener('pointerdown',e=>{if(g.ball.st!=='ready')return;g.ball.st='drag';capture(e);drag(e);},sig);
+  cv.addEventListener('pointermove',e=>{if(g.ball.st==='drag')drag(e);},sig);
+  const release=()=>{if(g.ball.st!=='drag')return;if(Math.hypot(g.pull.x,g.pull.y)<12){resetBall();return;}
+    g.ball.vx=-g.pull.x*g.k;g.ball.vy=-g.pull.y*g.k;g.ball.st='fly';g.ball.t=0;};
+  cv.addEventListener('pointerup',release,sig);cv.addEventListener('pointercancel',release,sig);
+
+  const knock=(c,vx,vy)=>{if(c.st!=='stand')return;c.st='fly';c.vx=vx;c.vy=vy;c.vr=(Math.random()-.5)*6+vx*.004;
+    if(!c.counted){c.counted=true;g.score++;popup(g,c.x+g.cw/2,c.y,'+1');}};
+  const hit=(cx,cy,r,c)=>{const nx=Math.max(c.x,Math.min(cx,c.x+g.cw)),ny=Math.max(c.y,Math.min(cy,c.y+g.ch));return (cx-nx)**2+(cy-ny)**2<r*r;};
+  const floorAt=(x,bottomPrev)=>{let f=g.ground;g.tables.forEach(tb=>{if(x>tb.x&&x<tb.x+tb.w&&bottomPrev<=tb.y+3&&tb.y<f)f=tb.y;});return f;};
+
+  g.update=t=>{const dt=clock(g,t);stepTxt(g,dt);const N=4,h=dt/N;
+    for(let s=0;s<N;s++){
+      const b=g.ball;
+      if(b.st==='fly'){b.t+=h;b.vy+=g.grav*h;const py=b.y;b.x+=b.vx*h;b.y+=b.vy*h;
+        const f=floorAt(b.x,py+g.br);
+        if(b.y+g.br>f){b.y=f-g.br;b.vy*=-.35;b.vx*=.75;}
+        g.tables.forEach(tb=>{if(b.x+g.br>tb.x&&b.x-g.br<tb.x+tb.w&&b.y>tb.y+2){b.x=b.x<tb.x+tb.w/2?tb.x-g.br:tb.x+tb.w+g.br;b.vx*=-.4;}});
+        g.cans.forEach(c=>{if(c.st==='stand'&&hit(b.x,b.y,g.br,c)){knock(c,b.vx*.7,b.vy*.6-80);b.vx*=.6;b.vy*=.8;}});
+        if(b.x>g.w+60||b.x<-60||b.t>5||(Math.hypot(b.vx,b.vy)<25&&b.y+g.br>=floorAt(b.x,b.y)-1)){b.st='done';g.shots--;if(!g.wait)g.wait=1.1;}
+      }
+      g.cans.forEach(c=>{if(c.st!=='fly')return;const pb=c.y+g.ch;c.vy+=g.grav*h;c.x+=c.vx*h;c.y+=c.vy*h;c.rot+=c.vr*h;
+        const f=floorAt(c.x+g.cw/2,pb);if(c.y+g.ch>f){c.y=f-g.ch;c.vy*=-.3;c.vx*=.7;c.vr*=.6;}
+        if(Math.hypot(c.vx,c.vy)>40){const cx=c.x+g.cw/2,cy=c.y+g.ch/2;g.cans.forEach(o=>{if(o.st==='stand'&&hit(cx,cy,g.cw*.6,o))knock(o,c.vx*.8,c.vy*.5-40);});}});
+      g.cans.forEach(c=>{if(c.st!=='stand')return;const f=c.sup.find(p=>p.st==='fly');if(f)knock(c,f.vx*.4+(Math.random()-.5)*60,-30);});
+    }
+    if(!g.cleared&&g.cans.every(c=>c.counted)){g.cleared=true;g.score+=3;popup(g,g.w*.6,g.h*.3,'Alle umgeworfen! +3');g.wait=1.6;}
+    if(g.wait>0){g.wait-=dt;if(g.wait<=0){g.wait=0;if(g.cleared||g.shots<=0){g.lvl++;build();}else if(g.ball.st==='done')resetBall();}}
+  };
+
+  g.draw=()=>{const c=g.c,s=g.sl,b=g.ball;paper(g);
+    ctx.fillStyle=c.soft;ctx.fillRect(0,g.ground,g.w,g.h-g.ground);
+    ctx.strokeStyle=c.line;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(0,g.ground);ctx.lineTo(g.w,g.ground);ctx.stroke();
+    g.tables.forEach(tb=>{ctx.fillStyle=c.subj[3];rr(tb.x,tb.y,tb.w,tb.h+2,4);ctx.fill();ctx.globalAlpha=.3;ctx.fillStyle=c.sheet;ctx.fillRect(tb.x+4,tb.y+6,tb.w-8,3);ctx.globalAlpha=1;});
+    const fork=s.y+g.h*.06,fl={x:s.x-g.w*.024,y:s.y-g.h*.02},fr={x:s.x+g.w*.024,y:s.y-g.h*.02};
+    ctx.strokeStyle=c.subj[3];ctx.lineCap='round';ctx.lineWidth=Math.max(6,g.w*.014);
+    ctx.beginPath();ctx.moveTo(s.x,g.ground);ctx.lineTo(s.x,fork);ctx.lineTo(fl.x,fl.y);ctx.moveTo(s.x,fork);ctx.lineTo(fr.x,fr.y);ctx.stroke();
+    if(b.st==='drag'||b.st==='ready'){ctx.strokeStyle=c.ink;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(fl.x,fl.y);ctx.lineTo(b.x,b.y);ctx.lineTo(fr.x,fr.y);ctx.stroke();}
+    if(b.st==='drag'&&Math.hypot(g.pull.x,g.pull.y)>12){const vx=-g.pull.x*g.k,vy=-g.pull.y*g.k;ctx.fillStyle=c.muted;
+      for(let i=1;i<=12;i++){const tt=i*.07,x=b.x+vx*tt,y=b.y+vy*tt+.5*g.grav*tt*tt;if(y>g.ground)break;ctx.globalAlpha=1-i/14;ctx.beginPath();ctx.arc(x,y,3,0,7);ctx.fill();}ctx.globalAlpha=1;}
+    g.cans.forEach(cn=>{ctx.save();ctx.translate(cn.x+g.cw/2,cn.y+g.ch/2);ctx.rotate(cn.rot);
+      ctx.fillStyle=cn.col;rr(-g.cw/2,-g.ch/2,g.cw,g.ch,3);ctx.fill();
+      ctx.fillStyle=c.sheet;ctx.globalAlpha=.75;ctx.fillRect(-g.cw/2,-g.ch*.12,g.cw,g.ch*.24);
+      ctx.globalAlpha=.35;ctx.fillRect(-g.cw/2,-g.ch/2,g.cw,g.ch*.08);ctx.fillRect(-g.cw/2,g.ch*.42,g.cw,g.ch*.08);ctx.globalAlpha=1;ctx.restore();});
+    if(b.st!=='done'){ctx.fillStyle=c.subj[0];ctx.beginPath();ctx.arc(b.x,b.y,g.br,0,7);ctx.fill();
+      ctx.globalAlpha=.4;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(b.x-g.br*.35,b.y-g.br*.35,g.br*.3,0,7);ctx.fill();ctx.globalAlpha=1;}
+    const left=g.shots-(b.st==='fly'?1:0);
+    for(let i=0;i<3;i++){ctx.beginPath();ctx.arc(20+i*22,22,7,0,7);if(i<left){ctx.fillStyle=c.subj[0];ctx.fill();}else{ctx.strokeStyle=c.line;ctx.lineWidth=2;ctx.stroke();}}
+    ctx.fillStyle=c.muted;ctx.font='700 15px Nunito, sans-serif';ctx.textAlign='right';ctx.textBaseline='middle';ctx.fillText('Turm '+(g.lvl+1),g.w-14,22);
+    drawTxt(g);};
+}};
+
+/* Ballons */
+const Balloons={init(g){
+  g.bs=[];g.ps=[];g.txt=[];g.spawn=0;g.last=null;g.t0=null;
+  const lay=()=>{const {w,h}=fit(3/4,RES);g.w=w;g.h=h;};g.relayout=()=>{lay();g.bs=[];};lay();
+  cv.addEventListener('pointerdown',e=>{const {x,y}=local(e);
+    for(let i=g.bs.length-1;i>=0;i--){const b=g.bs[i];const bx=b.x+Math.sin(b.ph)*6;const dx=(x-bx)/(b.r*.9),dy=(y-b.y)/b.r;
+      if(dx*dx+dy*dy<=1.35){g.bs.splice(i,1);const pts=b.gold?3:1;g.score+=pts;
+        for(let k=0;k<12;k++){const a=Math.random()*Math.PI*2,sp=60+Math.random()*160;g.ps.push({x:bx,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,life:.6,col:b.col});}
+        popup(g,bx,b.y,'+'+pts);break;}}},{signal:g.ac.signal});
+  g.update=t=>{const dt=clock(g,t);if(g.t0==null)g.t0=t;stepTxt(g,dt);
+    const speedUp=1+(t-g.t0)/1000/60*.7;
+    g.spawn-=dt;if(g.spawn<=0){g.spawn=.55/speedUp;const r=g.w*(.075+Math.random()*.05);const gold=Math.random()<.1;
+      g.bs.push({x:r+Math.random()*(g.w-2*r),y:g.h+r,r,vy:g.h/(3.4+Math.random()*2.4)*speedUp,ph:Math.random()*6,gold,col:gold?g.c.subj[5]:pick(g.c.subj.slice(0,5))});}
+    g.bs.forEach(b=>{b.y-=b.vy*dt;b.ph+=dt*2;});g.bs=g.bs.filter(b=>b.y>-b.r*2.2);
+    g.ps.forEach(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=300*dt;p.life-=dt;});g.ps=g.ps.filter(p=>p.life>0);};
+  g.draw=()=>{const c=g.c;paper(g);
+    g.bs.forEach(b=>{const x=b.x+Math.sin(b.ph)*6;
+      ctx.strokeStyle=c.muted;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(x,b.y+b.r);ctx.quadraticCurveTo(x+Math.sin(b.ph+1)*8,b.y+b.r*1.6,x,b.y+b.r*2.1);ctx.stroke();
+      ctx.fillStyle=b.col;ctx.beginPath();ctx.ellipse(x,b.y,b.r*.88,b.r,0,0,7);ctx.fill();
+      ctx.beginPath();ctx.moveTo(x-5,b.y+b.r+5);ctx.lineTo(x+5,b.y+b.r+5);ctx.lineTo(x,b.y+b.r-2);ctx.fill();
+      ctx.globalAlpha=.35;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.ellipse(x-b.r*.35,b.y-b.r*.4,b.r*.18,b.r*.3,-.5,0,7);ctx.fill();ctx.globalAlpha=1;
+      if(b.gold){ctx.fillStyle=c.ink;ctx.font=`700 ${Math.round(b.r*.6)}px Fredoka, sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('3',x,b.y);}});
+    g.ps.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/.6);ctx.fillStyle=p.col;ctx.fillRect(p.x-3,p.y-3,6,6);});ctx.globalAlpha=1;
+    drawTxt(g);};
+}};
+
+/* Obst-Schnitt */
+const FRUITS=[{o:'#e2483a',i:'#f6eac4',leaf:true},{o:'#f39a1e',i:'#ffc562'},{o:'#3f9a4c',i:'#ef5b5b',big:true,seeds:'#2a2a2a'},{o:'#8a6a3d',i:'#8fcd47',seeds:'#2a2a2a'},{o:'#f0d03a',i:'#fbf1a8'}];
+const Fruit={init(g){
+  g.txt=[];g.last=null;g.t0=null;g.fr=[];g.hv=[];g.ps=[];g.trail=[];g.spawn=.4;g.cut=false;g.combo=0;g.flash=0;
+  const lay=()=>{const {w,h}=fit(3/4,RES);g.w=w;g.h=h;g.grav=h*1.15;};g.relayout=()=>{lay();g.fr=[];g.hv=[];};lay();
+  const sig={signal:g.ac.signal};
+  const segDist=(a,b,p)=>{const dx=b.x-a.x,dy=b.y-a.y,L=dx*dx+dy*dy||1;let t=((p.x-a.x)*dx+(p.y-a.y)*dy)/L;t=Math.max(0,Math.min(1,t));return Math.hypot(a.x+t*dx-p.x,a.y+t*dy-p.y);};
+  const slice=(a,b)=>{const ang=Math.atan2(b.y-a.y,b.x-a.x),nx=-Math.sin(ang),ny=Math.cos(ang);
+    for(let i=g.fr.length-1;i>=0;i--){const f=g.fr[i];if(segDist(a,b,f)>=f.r)continue;g.fr.splice(i,1);
+      if(f.bomb){g.score=Math.max(0,g.score-3);g.flash=performance.now()+500;popup(g,f.x,f.y,'−3');
+        for(let k=0;k<16;k++){const q=Math.random()*6.3,sp=80+Math.random()*200;g.ps.push({x:f.x,y:f.y,vx:Math.cos(q)*sp,vy:Math.sin(q)*sp,life:.7,col:g.c.muted});}continue;}
+      g.score++;g.combo++;popup(g,f.x,f.y-f.r,'+1');
+      [1,-1].forEach(sd=>g.hv.push({x:f.x,y:f.y,r:f.r,k:f.k,rot:ang+(sd>0?0:Math.PI),vr:sd*2.5,vx:f.vx+nx*sd*90,vy:f.vy+ny*sd*90-60}));
+      for(let k=0;k<10;k++){const q=Math.random()*6.3,sp=50+Math.random()*150;g.ps.push({x:f.x,y:f.y,vx:Math.cos(q)*sp,vy:Math.sin(q)*sp,life:.6,col:FRUITS[f.k].i});}}};
+  cv.addEventListener('pointerdown',e=>{g.cut=true;g.combo=0;g.trail=[{...local(e),t:performance.now()}];capture(e);},sig);
+  cv.addEventListener('pointermove',e=>{if(!g.cut)return;const p=local(e),a=g.trail[g.trail.length-1];g.trail.push({...p,t:performance.now()});if(a)slice(a,p);},sig);
+  const end=()=>{if(!g.cut)return;g.cut=false;if(g.combo>=3){g.score+=2;const l=g.trail[g.trail.length-1]||{x:g.w/2,y:g.h/2};popup(g,l.x,l.y,'Kombo! +2');}g.combo=0;};
+  cv.addEventListener('pointerup',end,sig);cv.addEventListener('pointercancel',end,sig);
+
+  g.update=t=>{const dt=clock(g,t);if(g.t0==null)g.t0=t;const el=(t-g.t0)/1000;stepTxt(g,dt);
+    g.spawn-=dt;if(g.spawn<=0){const sp=1+el/60*.6;g.spawn=(1+Math.random()*.5)/sp;const n=Math.random()<.35?ri(2,3):1;
+      for(let i=0;i<n;i++){const bomb=el>5&&Math.random()<.13,k=ri(0,FRUITS.length-1);let r=g.w*(.065+Math.random()*.025);if(!bomb&&FRUITS[k].big)r*=1.3;
+        const x=g.w*(.15+Math.random()*.7),hmax=g.h*(.5+Math.random()*.32);
+        g.fr.push({x,y:g.h+r,r,k,bomb,vx:(g.w/2-x)*(.3+Math.random()*.5),vy:-Math.sqrt(2*g.grav*hmax),rot:0,vr:(Math.random()-.5)*3});}}
+    const mv=f=>{f.vy+=g.grav*dt;f.x+=f.vx*dt;f.y+=f.vy*dt;f.rot+=f.vr*dt;};
+    g.fr.forEach(mv);g.fr=g.fr.filter(f=>!(f.vy>0&&f.y>g.h+f.r*2));
+    g.hv.forEach(mv);g.hv=g.hv.filter(f=>f.y<g.h+f.r*2);
+    g.ps.forEach(p=>{p.vy+=400*dt;p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;});g.ps=g.ps.filter(p=>p.life>0);
+    const now=performance.now();g.trail=g.trail.filter(p=>now-p.t<140);};
+
+  const whole=f=>{const F=FRUITS[f.k];ctx.save();ctx.translate(f.x,f.y);ctx.rotate(f.rot);
+    if(f.bomb){ctx.fillStyle='#2b2d33';ctx.beginPath();ctx.arc(0,0,f.r,0,7);ctx.fill();ctx.strokeStyle=g.c.bad;ctx.lineWidth=3;ctx.stroke();
+      ctx.strokeStyle=g.c.muted;ctx.beginPath();ctx.moveTo(0,-f.r);ctx.quadraticCurveTo(f.r*.3,-f.r*1.4,f.r*.5,-f.r*1.3);ctx.stroke();
+      ctx.fillStyle=g.c.subj[5];ctx.beginPath();ctx.arc(f.r*.5,-f.r*1.3,4+Math.random()*2,0,7);ctx.fill();
+      ctx.fillStyle='#ffffff';ctx.font=`700 ${Math.round(f.r)}px Fredoka, sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('!',0,1);}
+    else{ctx.fillStyle=F.o;ctx.beginPath();ctx.arc(0,0,f.r,0,7);ctx.fill();
+      if(F.big){ctx.strokeStyle='#2d7a39';ctx.lineWidth=3;for(let k=0;k<3;k++){ctx.beginPath();ctx.ellipse(0,0,k*f.r*.33+1,f.r,0,0,7);ctx.stroke();}}
+      if(F.leaf){ctx.fillStyle='#3f9a4c';ctx.beginPath();ctx.ellipse(f.r*.3,-f.r*.95,f.r*.28,f.r*.13,-.5,0,7);ctx.fill();}
+      ctx.globalAlpha=.3;ctx.fillStyle='#ffffff';ctx.beginPath();ctx.ellipse(-f.r*.35,-f.r*.35,f.r*.22,f.r*.32,-.6,0,7);ctx.fill();ctx.globalAlpha=1;}
+    ctx.restore();};
+  const half=f=>{const F=FRUITS[f.k];ctx.save();ctx.translate(f.x,f.y);ctx.rotate(f.rot);
+    ctx.fillStyle=F.o;ctx.beginPath();ctx.arc(0,0,f.r,0,Math.PI);ctx.closePath();ctx.fill();
+    ctx.fillStyle=F.i;ctx.beginPath();ctx.arc(0,0,f.r*.82,0,Math.PI);ctx.closePath();ctx.fill();
+    if(F.seeds){ctx.fillStyle=F.seeds;for(let k=0;k<5;k++){ctx.beginPath();ctx.arc((k-2)*f.r*.28,f.r*.3+(k%2)*f.r*.15,2,0,7);ctx.fill();}}
+    ctx.restore();};
+  g.draw=t=>{const c=g.c;paper(g);
+    g.hv.forEach(half);g.fr.forEach(whole);
+    g.ps.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/.6);ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(p.x,p.y,3,0,7);ctx.fill();});ctx.globalAlpha=1;
+    ctx.strokeStyle=c.ink;ctx.lineCap='round';
+    for(let i=1;i<g.trail.length;i++){const a=g.trail[i-1],b=g.trail[i];ctx.lineWidth=2+6*i/g.trail.length;ctx.globalAlpha=.25+.6*i/g.trail.length;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();}
+    ctx.globalAlpha=1;
+    if(t<g.flash){ctx.globalAlpha=.22;ctx.fillStyle=c.bad;ctx.fillRect(0,0,g.w,g.h);ctx.globalAlpha=1;}
+    drawTxt(g);};
+}};
+
+/* Torwandschießen */
+const Torwand={init(g){
+  g.txt=[];g.last=null;g.goals=0;g.shots=0;g.flash=0;
+  const lay=()=>{const {w,h}=fit(3/4,RES);g.w=w;g.h=h;
+    g.wall={x:w*.1,y:h*.1,w:w*.8,h:h*.34};g.hr=w*.075;
+    g.holes=[{x:g.wall.x+g.wall.w*.24,y:g.wall.y+g.wall.h*.7,p:2},{x:g.wall.x+g.wall.w*.76,y:g.wall.y+g.wall.h*.3,p:3}];
+    g.start={x:w*.5,y:h*.84};g.r0=w*.06;g.r1=w*.032;
+    g.keeper={x:w*.5,w:w*.15,h:g.wall.h*.5,dir:1};};
+  const reset=()=>{g.ball={x:g.start.x,y:g.start.y,r:g.r0,st:'ready',p:0,a:1,tt:0};};
+  g.relayout=()=>{lay();reset();};lay();reset();
+  const keeperOn=()=>g.goals>=3;
+
+  const sig={signal:g.ac.signal};let pts=[];
+  cv.addEventListener('pointerdown',e=>{if(g.ball.st!=='ready')return;g.ball.st='aim';pts=[{...local(e),t:performance.now()}];capture(e);},sig);
+  cv.addEventListener('pointermove',e=>{if(g.ball.st!=='aim')return;pts.push({...local(e),t:performance.now()});if(pts.length>40)pts.shift();},sig);
+  const rel=()=>{const b=g.ball;if(b.st!=='aim')return;const first=pts[0],last=pts[pts.length-1],now=performance.now();
+    const dx=last.x-first.x,dy=last.y-first.y;if(dy>-30){b.st='ready';return;}
+    let f=last;for(const p of pts){if(now-p.t<=120){f=p;break;}}
+    const dt=Math.max(.016,(last.t-f.t)/1000),sp=Math.hypot(last.x-f.x,last.y-f.y)/dt;
+    const s=Math.min(1.5,Math.max(.15,sp/(g.h*2.4)));
+    const ay=g.wall.y+g.wall.h-s*g.wall.h;
+    const ax=g.start.x+(dx/-dy)*(g.start.y-ay);
+    Object.assign(b,{st:'fly',p:0,sx:b.x,sy:b.y,ax,ay});g.shots++;};
+  cv.addEventListener('pointerup',rel,sig);cv.addEventListener('pointercancel',rel,sig);
+
+  const resolve=()=>{const b=g.ball,W=g.wall,K=g.keeper;
+    b.vx=(b.ax-b.sx)/.55*.4;b.vy=0;b.tt=0;
+    if(keeperOn()&&b.ax>K.x-K.w/2&&b.ax<K.x+K.w/2&&b.ay>W.y+W.h-K.h&&b.ay<W.y+W.h){popup(g,b.ax,b.ay-30,'Gehalten!');b.st='bounce';b.vy=-120;return;}
+    for(const ho of g.holes){const d=Math.hypot(b.ax-ho.x,b.ay-ho.y);
+      if(d<g.hr-g.r1*.5){g.score+=ho.p;g.goals++;popup(g,ho.x,ho.y-g.hr-14,`Tor! +${ho.p}`);b.st='in';b.hx=ho.x;b.hy=ho.y;
+        if(g.goals===3)setTimeout(()=>{if(G===g)popup(g,g.w/2,g.wall.y+g.wall.h+40,'Der Torwart kommt!');},500);return;}
+      if(d<g.hr+g.r1){popup(g,b.ax,b.ay-30,'Knapp!');b.st='bounce';b.vy=-60;return;}}
+    if(b.ax>W.x&&b.ax<W.x+W.w&&b.ay>W.y&&b.ay<W.y+W.h){popup(g,b.ax,b.ay-30,'Gegen die Wand');b.st='bounce';b.vy=-60;return;}
+    popup(g,Math.max(60,Math.min(g.w-60,b.ax)),Math.max(30,b.ay),'Daneben');b.st='out';b.vx=(b.ax-b.sx)/.55;b.vy=(b.ay-b.sy)/.55;};
+
+  g.update=t=>{const dt=clock(g,t);stepTxt(g,dt);const b=g.ball,W=g.wall,K=g.keeper;
+    if(keeperOn()){const sp=g.w*(.22+Math.min(.25,(g.goals-3)*.03));K.x+=K.dir*sp*dt;
+      const lo=W.x+K.w/2,hi=W.x+W.w-K.w/2;if(K.x<lo){K.x=lo;K.dir=1;}if(K.x>hi){K.x=hi;K.dir=-1;}}
+    if(b.st==='fly'){b.p=Math.min(1,b.p+dt/.55);const p=b.p;
+      b.x=b.sx+(b.ax-b.sx)*p;b.y=b.sy+(b.ay-b.sy)*p-Math.sin(Math.PI*p)*g.h*.05;b.r=g.r0+(g.r1-g.r0)*p;
+      if(p>=1)resolve();}
+    else if(b.st==='in'){b.tt+=dt;b.x+=(b.hx-b.x)*Math.min(1,dt*12);b.y+=(b.hy-b.y)*Math.min(1,dt*12);b.r=Math.max(0,b.r-dt*g.r1*2.5);b.a=Math.max(0,1-b.tt/.5);}
+    else if(b.st==='bounce'){b.tt+=dt;b.vy+=g.h*2*dt;b.y+=b.vy*dt;b.x+=b.vx*dt*.3;const fl=W.y+W.h+g.h*.03;if(b.y>fl){b.y=fl;b.vy*=-.3;}b.a=Math.max(0,1-Math.max(0,b.tt-.4)/.4);}
+    else if(b.st==='out'){b.tt+=dt;b.x+=b.vx*dt;b.y+=b.vy*dt;b.r=Math.max(2,b.r-dt*8);b.a=Math.max(0,1-b.tt/.5);}
+    if(b.st!=='ready'&&b.st!=='aim'&&b.st!=='fly'&&b.tt>.85)reset();
+  };
+
+  const football=(x,y,r,a)=>{if(r<=0)return;ctx.globalAlpha=a;ctx.fillStyle='#ffffff';ctx.strokeStyle='#22262e';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.arc(x,y,r,0,7);ctx.fill();ctx.stroke();ctx.fillStyle='#22262e';ctx.beginPath();
+    for(let i=0;i<5;i++){const q=-Math.PI/2+i*Math.PI*2/5;ctx.lineTo(x+Math.cos(q)*r*.38,y+Math.sin(q)*r*.38);}ctx.closePath();ctx.fill();
+    for(let i=0;i<5;i++){const q=-Math.PI/2+i*Math.PI*2/5;ctx.beginPath();ctx.moveTo(x+Math.cos(q)*r*.38,y+Math.sin(q)*r*.38);ctx.lineTo(x+Math.cos(q)*r*.95,y+Math.sin(q)*r*.95);ctx.stroke();}
+    ctx.globalAlpha=1;};
+  g.draw=()=>{const c=g.c,W=g.wall,K=g.keeper,b=g.ball;paper(g);
+    const gy=W.y+W.h;
+    for(let i=0;i<7;i++){const y0=gy+(g.h-gy)*(i/7)**1.2,y1=gy+(g.h-gy)*((i+1)/7)**1.2;ctx.globalAlpha=i%2?.18:.28;ctx.fillStyle=c.subj[2];ctx.fillRect(0,y0,g.w,y1-y0+1);}
+    ctx.globalAlpha=1;
+    ctx.fillStyle=c.sheet;ctx.globalAlpha=.8;ctx.beginPath();ctx.ellipse(g.start.x,g.start.y+g.r0*.9,g.r0*.5,g.r0*.18,0,0,7);ctx.fill();ctx.globalAlpha=1;
+    ctx.fillStyle=c.muted;ctx.fillRect(W.x+W.w*.12,gy,6,g.h*.03);ctx.fillRect(W.x+W.w*.88-6,gy,6,g.h*.03);
+    ctx.fillStyle=c.subj[1];rr(W.x,W.y,W.w,W.h,6);ctx.fill();ctx.strokeStyle=c.ink;ctx.lineWidth=3;ctx.stroke();
+    g.holes.forEach(ho=>{ctx.fillStyle='#14181f';ctx.beginPath();ctx.arc(ho.x,ho.y,g.hr,0,7);ctx.fill();ctx.strokeStyle='#ffffff';ctx.lineWidth=4;ctx.stroke();
+      ctx.fillStyle='#ffffff';ctx.font='700 16px Fredoka, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(ho.p,ho.x+(ho.x<g.w/2?g.hr+16:-g.hr-16),ho.y);});
+    if(b.st==='in')football(b.x,b.y,b.r,b.a);
+    if(keeperOn()){const kx=K.x,kb=gy,kw=K.w,kh=K.h;
+      ctx.fillStyle=c.subj[0];rr(kx-kw*.32,kb-kh*.78,kw*.64,kh*.5,6);ctx.fill();
+      ctx.fillStyle=c.ink;ctx.fillRect(kx-kw*.26,kb-kh*.3,kw*.18,kh*.3);ctx.fillRect(kx+kw*.08,kb-kh*.3,kw*.18,kh*.3);
+      ctx.strokeStyle=c.subj[0];ctx.lineWidth=Math.max(5,kw*.1);ctx.lineCap='round';ctx.beginPath();
+      ctx.moveTo(kx-kw*.3,kb-kh*.7);ctx.lineTo(kx-kw*.5,kb-kh*1.05);ctx.moveTo(kx+kw*.3,kb-kh*.7);ctx.lineTo(kx+kw*.5,kb-kh*1.05);ctx.stroke();
+      ctx.fillStyle=c.subj[5];ctx.beginPath();ctx.arc(kx-kw*.5,kb-kh*1.05,kw*.08,0,7);ctx.arc(kx+kw*.5,kb-kh*1.05,kw*.08,0,7);ctx.fill();
+      ctx.fillStyle='#f1c9a5';ctx.beginPath();ctx.arc(kx,kb-kh*.92,kw*.16,0,7);ctx.fill();}
+    if(b.st==='ready'&&g.shots<2){const ho=g.holes[0];ctx.strokeStyle=c.ink;ctx.globalAlpha=.4;ctx.lineWidth=2;ctx.setLineDash([6,6]);
+      ctx.beginPath();ctx.moveTo(b.x,b.y-b.r);ctx.quadraticCurveTo((b.x+ho.x)/2,(b.y+ho.y)/2-g.h*.05,ho.x,ho.y);ctx.stroke();ctx.setLineDash([]);ctx.globalAlpha=1;}
+    if(b.st!=='in')football(b.x,b.y,b.r,b.a);
+    ctx.fillStyle=c.muted;ctx.font='700 15px Nunito, sans-serif';ctx.textAlign='left';ctx.textBaseline='middle';ctx.fillText('Tore: '+g.goals,14,g.h-18);
+    drawTxt(g);};
+}};
+
+/* Maulwurf hauen */
+const Maulwurf={init(g){
+  g.txt=[];g.last=null;g.t0=null;g.fx=[];g.spawn=.6;g.flash=0;
+  const lay=()=>{const {w,h}=fit(3/4,RES);g.w=w;g.h=h;const old=g.holes||[];g.holes=[];
+    for(let r=0;r<3;r++)for(let c=0;c<3;c++){const i=r*3+c;g.holes.push({x:w*(.2+c*.3),y:h*(.3+r*.27),m:old[i]?old[i].m:null});}
+    g.hrx=w*.12;g.hry=w*.045;g.mr=w*.08;};
+  g.relayout=lay;lay();
+  const rise=m=>{if(m.t<.15)return m.t/.15;if(m.t<.15+m.dur)return 1;return Math.max(0,1-(m.t-.15-m.dur)/.15);};
+  cv.addEventListener('pointerdown',e=>{const p=local(e);
+    for(const ho of g.holes){const m=ho.m;if(!m||m.hit)continue;const r=rise(m);if(r<.25)continue;
+      const top=ho.y-r*g.mr*1.9-g.mr*.3;
+      if(Math.abs(p.x-ho.x)<g.mr*1.1&&p.y>top&&p.y<ho.y+g.hry*1.5){
+        m.hit=true;m.t=Math.max(m.t,.15+m.dur);g.fx.push({x:p.x,y:p.y,life:.3});
+        if(m.k==='igel'){g.score=Math.max(0,g.score-2);g.flash=performance.now()+400;popup(g,ho.x,top-10,'Autsch! −2');}
+        else{const pts=m.k==='gold'?3:1;g.score+=pts;popup(g,ho.x,top-10,'+'+pts);}
+        break;}}},{signal:g.ac.signal});
+  g.update=t=>{const dt=clock(g,t);if(g.t0==null)g.t0=t;const el=(t-g.t0)/1000;stepTxt(g,dt);
+    g.holes.forEach(ho=>{const m=ho.m;if(!m)return;m.t+=dt*(m.hit?1.6:1);if(m.t>.3+m.dur)ho.m=null;});
+    g.spawn-=dt;if(g.spawn<=0){g.spawn=Math.max(.35,.8-el*.007)*(.7+Math.random()*.6);
+      const maxUp=el<15?1:el<35?2:3;const active=g.holes.filter(h=>h.m).length;
+      const free=g.holes.filter(h=>!h.m);
+      if(active<maxUp&&free.length){const ho=pick(free);const q=Math.random();
+        const k=el>8&&q<.16?'igel':q>.92?'gold':'mole';ho.m={k,t:0,dur:Math.max(.55,1.2-el*.01)*(k==='gold'?.75:1),hit:false};}}
+    g.fx.forEach(f=>f.life-=dt);g.fx=g.fx.filter(f=>f.life>0);};
+  const drawMole=(ho,m)=>{const r=rise(m),R=g.mr,x=ho.x,y=ho.y+R*1.25-r*R*1.9;
+    ctx.save();ctx.beginPath();ctx.rect(0,0,g.w,ho.y);ctx.clip();
+    if(m.k==='igel'){ctx.fillStyle='#5a4330';for(let i=0;i<9;i++){const q=Math.PI+i*Math.PI/8;ctx.beginPath();
+        ctx.moveTo(x+Math.cos(q-.18)*R*.95,y+Math.sin(q-.18)*R*1.05);ctx.lineTo(x+Math.cos(q)*R*1.4,y+Math.sin(q)*R*1.5);ctx.lineTo(x+Math.cos(q+.18)*R*.95,y+Math.sin(q+.18)*R*1.05);ctx.fill();}
+      ctx.fillStyle='#b48a5e';}
+    else ctx.fillStyle=m.k==='gold'?g.c.subj[5]:'#6e5d52';
+    ctx.beginPath();ctx.ellipse(x,y,R,R*1.15,0,0,7);ctx.fill();
+    ctx.fillStyle=m.k==='igel'?'#e9cfa8':'#c9b3a3';ctx.beginPath();ctx.ellipse(x,y+R*.35,R*.55,R*.4,0,0,7);ctx.fill();
+    ctx.fillStyle='#1b1b1b';ctx.strokeStyle='#1b1b1b';ctx.lineWidth=2;
+    [-1,1].forEach(s=>{const ex=x+s*R*.35,ey=y-R*.25;
+      if(m.hit){ctx.beginPath();ctx.moveTo(ex-4,ey-4);ctx.lineTo(ex+4,ey+4);ctx.moveTo(ex+4,ey-4);ctx.lineTo(ex-4,ey+4);ctx.stroke();}
+      else{ctx.beginPath();ctx.arc(ex,ey,R*.09,0,7);ctx.fill();}});
+    ctx.fillStyle='#f08a9a';ctx.beginPath();ctx.arc(x,y+R*.15,R*.15,0,7);ctx.fill();
+    if(m.k!=='igel'){ctx.fillStyle='#ffffff';ctx.fillRect(x-R*.1,y+R*.32,R*.09,R*.14);ctx.fillRect(x+R*.01,y+R*.32,R*.09,R*.14);}
+    ctx.restore();};
+  g.draw=t=>{const c=g.c;paper(g);ctx.globalAlpha=.2;ctx.fillStyle=c.subj[2];ctx.fillRect(0,0,g.w,g.h);ctx.globalAlpha=1;
+    g.holes.forEach(ho=>{
+      ctx.fillStyle=c.subj[3];ctx.globalAlpha=.55;ctx.beginPath();ctx.ellipse(ho.x,ho.y+3,g.hrx*1.3,g.hry*2,0,0,7);ctx.fill();ctx.globalAlpha=1;
+      ctx.fillStyle='#2a1d14';ctx.beginPath();ctx.ellipse(ho.x,ho.y,g.hrx,g.hry,0,0,7);ctx.fill();
+      if(ho.m)drawMole(ho,ho.m);
+      ctx.strokeStyle=c.subj[3];ctx.lineWidth=6;ctx.beginPath();ctx.ellipse(ho.x,ho.y,g.hrx,g.hry,0,0,Math.PI);ctx.stroke();});
+    g.fx.forEach(f=>{ctx.strokeStyle=c.ink;ctx.globalAlpha=f.life/.3;ctx.lineWidth=3;ctx.beginPath();ctx.arc(f.x,f.y,(1-f.life/.3)*30+8,0,7);ctx.stroke();});ctx.globalAlpha=1;
+    if(t<g.flash){ctx.globalAlpha=.22;ctx.fillStyle=c.bad;ctx.fillRect(0,0,g.w,g.h);ctx.globalAlpha=1;}
+    drawTxt(g);};
+}};
+
+const IMPL={katapult:Katapult,balloons:Balloons,fruit:Fruit,torwand:Torwand,maulwurf:Maulwurf};
+function startGame(idx){
+  const def=GAMES[idx];show('game');
+  $('#gName').textContent=def.name;$('#gHint').textContent=def.hint;$('#gScore').textContent='0';$('#over').hidden=true;$('#quit').hidden=false;
+  G={key:def.key,secs:def.secs,score:0,ac:new AbortController(),done:false,c:colors()};
+  G.end=performance.now()+def.secs*1000;
+  IMPL[def.key].init(G);
+  window.addEventListener('resize',()=>{if(G&&G.relayout)G.relayout();},{signal:G.ac.signal});
+  G.raf=requestAnimationFrame(loop);
+}
+function loop(t){
+  if(!G||G.done)return;
+  const rem=Math.max(0,(G.end-t)/1000);
+  $('#tBar').style.width=(rem/G.secs*100)+'%';
+  G.update(t);G.draw(t);$('#gScore').textContent=G.score;
+  if(rem<=0){finishGame(true);return;}
+  G.raf=requestAnimationFrame(loop);
+}
+function finishGame(timeUp){
+  if(!G||G.done)return;G.done=true;cancelAnimationFrame(G.raf);G.ac.abort();
+  $('#overTxt').textContent=`Du hast ${G.score} ${G.score===1?'Punkt':'Punkte'} im Spiel geholt. Jetzt geht es mit neuen Fragen weiter.`;
+  $('#over').querySelector('.remark').textContent=timeUp?'Zeit um!':'Spiel beendet';
+  $('#over').hidden=false;$('#quit').hidden=true;$('#back').focus();
+}
+$('#back').onclick=()=>{G=null;renderStart();};
+$('#quit').onclick=()=>finishGame(false);
+
+renderStart();
+})();
+</script>
+
+</body>
+</html>
