@@ -1,4 +1,4 @@
-# Kopfnuss Klasse 5
+# Maxis Kopfnuss
 
 Lernspiel für die 5. Klasse (Realschule und Gymnasium, Bayern), läuft im Browser auf Tablet, Handy und PC.
 

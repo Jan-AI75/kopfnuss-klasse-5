@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="Kopfnuss">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Kopfnuss Klasse 5</title>
+<title>Maxis Kopfnuss</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap">
@@ -80,16 +80,20 @@ p{margin:0}
 
 /* Start */
 .start{display:flex;flex-direction:column;gap:16px}
-.covers{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
-.cover{border-radius:8px 10px 10px 8px;background:var(--sc);color:#fff;padding:10px 6px 8px;font-weight:800;font-size:.78rem;text-align:center;position:relative;min-height:62px;display:flex;align-items:flex-end;justify-content:center;box-shadow:inset 6px 0 0 rgba(0,0,0,.12)}
-.cover::before{content:"";position:absolute;top:9px;left:12px;right:8px;height:16px;border-radius:3px;background:rgba(255,255,255,.85)}
+.covers{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+@media (max-width:720px){.covers{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.cover{min-width:0;border-radius:6px 10px 10px 6px;background:var(--sc);color:#fff;padding:9px 7px 9px 12px;display:flex;flex-direction:column;align-items:stretch;gap:7px;box-shadow:inset 5px 0 0 rgba(0,0,0,.14)}
+.cover .lbl{height:40px;background:var(--sheet);border-radius:5px;display:grid;place-items:center}
+.cover svg{width:24px;height:24px;stroke:var(--sc);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.cover span{display:block;font-weight:800;font-size:.8rem;line-height:1.15;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand .bm{font-family:var(--f-body);font-weight:800;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ph);align-self:flex-start;margin-top:4px}
 :root[data-theme="dark"] .cover{color:#13201d}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cover{color:#13201d}}
 .pickwrap{display:flex;flex-direction:column;gap:10px}
-.picks{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
-.pick{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:var(--sheet);border:2px solid var(--line);border-radius:14px;padding:12px;min-height:104px;box-shadow:0 3px 0 var(--line)}
+.picks{display:grid;grid-template-columns:repeat(auto-fill,minmax(136px,1fr));grid-auto-rows:1fr;gap:10px}
+.pick{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;background:var(--sheet);border:2px solid var(--line);border-radius:14px;padding:12px;min-height:104px;box-shadow:0 3px 0 var(--line)}
 .pick .ico{width:40px;height:40px;border-radius:10px;background:var(--soft);display:grid;place-items:center}
-.pick b{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.2}
+.pick b{font-family:var(--f-display);font-weight:600;font-size:1.05rem;line-height:1.2;max-width:100%;overflow-wrap:break-word;hyphens:manual}
 .pick small{color:var(--muted);font-size:.82rem;font-weight:700}
 .pick[aria-checked="true"]{border-color:var(--accent);background:var(--soft);box-shadow:0 3px 0 var(--accent)}
 .pick[aria-checked="true"] .ico{background:var(--sheet)}
@@ -152,13 +156,13 @@ canvas{display:block;border-radius:14px;border:1.5px solid var(--line);touch-act
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
-<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html,body{margin:0}body{margin:0}[hidden]{display:none!important}</style>
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html,body{margin:0}[hidden]{display:none!important}</style>
 </head>
 <body>
 
 <div class="app">
   <header class="bar">
-    <div class="brand">Kopfnuss <small>Klasse 5</small></div>
+    <div class="brand"><span class="bm">Maxis</span>Kopfnuss</div>
     <div class="right">
       <div class="seg" id="seg" role="group" aria-label="Schulart">
         <button id="lv0" type="button" aria-pressed="false">Realschule</button>
@@ -176,12 +180,12 @@ canvas{display:block;border-radius:14px;border:1.5px solid var(--line);touch-act
         <h1>Zehn Fragen, dann ein Spiel.</h1>
         <p class="lead">Deutsch, Mathe und Allgemeinwissen bunt gemischt. Mit 60 Punkten schaltest du die Belohnung frei.</p>
         <div class="covers" aria-hidden="true">
-          <div class="cover" style="--sc:var(--de)">Deutsch</div>
-          <div class="cover" style="--sc:var(--ma)">Mathe</div>
-          <div class="cover" style="--sc:var(--ek)">Erdkunde</div>
-          <div class="cover" style="--sc:var(--ge)">Geschichte</div>
-          <div class="cover" style="--sc:var(--bi)">Bio</div>
-          <div class="cover" style="--sc:var(--ph)">Physik</div>
+          <div class="cover" style="--sc:var(--de)"><div class="lbl"><svg viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 6l3 3M4 20h7"/></svg></div><span>Deutsch</span></div>
+          <div class="cover" style="--sc:var(--ma)"><div class="lbl"><svg viewBox="0 0 24 24"><path d="M7 4v6M4 7h6M14 7h6M15 15l4 4M19 15l-4 4M4 16h6M4 19h6"/></svg></div><span>Mathe</span></div>
+          <div class="cover" style="--sc:var(--ek)"><div class="lbl"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c3.5 3.5 3.5 12.5 0 16M12 4c-3.5 3.5-3.5 12.5 0 16"/></svg></div><span>Erdkunde</span></div>
+          <div class="cover" style="--sc:var(--ge)"><div class="lbl"><svg viewBox="0 0 24 24"><path d="M4 9l8-5 8 5zM6.5 9v8M10.5 9v8M13.5 9v8M17.5 9v8M4 20h16"/></svg></div><span>Geschichte</span></div>
+          <div class="cover" style="--sc:var(--bi)"><div class="lbl"><svg viewBox="0 0 24 24"><path d="M5 19c0-9 6-14 14-14 0 8-5 14-14 14z"/><path d="M5 19l8-8"/></svg></div><span>Biologie</span></div>
+          <div class="cover" style="--sc:var(--ph)"><div class="lbl"><svg viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></div><span>Physik</span></div>
         </div>
         <div class="pickwrap">
           <div class="eyebrow">Welches Spiel willst du danach spielen?</div>
@@ -643,7 +647,7 @@ const GAMES=[
   {key:'katapult',name:'Katapult',secs:120,info:'2 Minuten',hint:'Ziehe die Schleuder nach hinten und lass los. Wirf alle Dosen um, du hast drei Würfe pro Turm.'},
   {key:'balloons',name:'Ballons platzen',secs:60,info:'60 Sekunden',hint:'Tippe die Ballons an, bevor sie wegfliegen. Goldene Ballons zählen 3 Punkte.'},
   {key:'fruit',name:'Obst-Schnitt',secs:60,info:'60 Sekunden',hint:'Wische durch das Obst. Drei Früchte in einem Zug geben Bonus. Finger weg von den Bomben!'},
-  {key:'torwand',name:'Torwandschießen',secs:90,info:'90 Sekunden',hint:'Wische vom Ball aus nach oben. Die Richtung bestimmt links oder rechts, der Schwung die Höhe. Unten links gibt es 2, oben rechts 3 Punkte.'},
+  {key:'torwand',name:'Torwand­schießen',secs:90,info:'90 Sekunden',hint:'Wische vom Ball aus nach oben. Die Richtung bestimmt links oder rechts, der Schwung die Höhe. Unten links gibt es 2, oben rechts 3 Punkte.'},
   {key:'maulwurf',name:'Maulwurf hauen',secs:60,info:'60 Sekunden',hint:'Tippe die Maulwürfe an, bevor sie verschwinden. Goldene zählen 3 Punkte. Igel nicht antippen, die kosten 2 Punkte.'}
 ];
 
